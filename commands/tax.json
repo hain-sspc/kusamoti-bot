@@ -1,0 +1,5 @@
+{
+  "purchaseTaxRate": 0.1,
+  "sellTaxRate": 0.15,
+  "payTaxRate": 0.05
+}
