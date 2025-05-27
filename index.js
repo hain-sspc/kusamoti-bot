@@ -58,7 +58,7 @@ client.on(Events.MessageCreate, async message => {
     const isGlobal = Object.values(data).some(entry => entry.channel_id === thisChannelId);
     if (!isGlobal) return;
 
-    // @everyone/@here削除
+    //@everyone/@here削除
     let content = `${message.content || ''}`
         .replace(/@everyone/g, '')
         .replace(/@here/g, '')
