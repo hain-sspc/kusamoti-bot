@@ -12,6 +12,6 @@ module.exports = {
         const balance = getBalance(guildId, userId);
         const coinName = getCoinName(guildId) || 'コイン';
 
-        await interaction.reply(`💰 あなたの所持金は ${balance} ${coinName} です。`);
+        await interaction.reply(`あなたの所持金は ${balance} ${coinName} です。`);
     },
 };

@@ -25,6 +25,6 @@ module.exports = {
         }
 
         economy.setCoinName(guildId, coinName);
-        await interaction.reply(`✅ コイン「${coinName}」がこのサーバーで設定されました。経済機能が使用可能になりました！`);
+        await interaction.reply(`コイン「${coinName}」がこのサーバーで設定されました。経済機能が使用可能になりました！`);
     }
 };

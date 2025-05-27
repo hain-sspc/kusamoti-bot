@@ -1,10 +1,10 @@
-﻿const { Client, GatewayIntentBits, Collection, Events } = require('discord.js');
+﻿const { Client, GatewayIntentBits, Collection, Events,EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 const config = require('./config.json');
 
-const globalPath = path.join(__dirname, 'globalchat.json');
+const globalPath = path.join(__dirname, 'data/globalchat.json');
 
 const client = new Client({
     intents: [
@@ -16,16 +16,16 @@ const client = new Client({
 
 client.commands = new Collection();
 
-// コマンド読み込み（再追加）
+// コマンド読み込み
 const commandFiles = fs.readdirSync(path.join(__dirname, 'commands')).filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     client.commands.set(command.data.name, command);
 }
 
-// Bot起動時の処理
+// Bot起動時処理
 client.once(Events.ClientReady, () => {
-    console.log(`✅ ログイン成功: ${client.user.tag}`);
+    console.log(`ログイン成功: ${client.user.tag}`);
 });
 
 // コマンド実行時の処理
@@ -54,28 +54,40 @@ client.on(Events.MessageCreate, async message => {
     const data = JSON.parse(fs.readFileSync(globalPath, 'utf-8'));
     const thisChannelId = message.channel.id;
 
-    // このチャンネルがグローバルチャット対象か確認
+    // グローバルチャット対象か確認
     const isGlobal = Object.values(data).some(entry => entry.channel_id === thisChannelId);
     if (!isGlobal) return;
 
-    // メッセージ内容作成（@everyone と @here を削除）
+    // @everyone/@here削除
     let content = `${message.content || ''}`
         .replace(/@everyone/g, '')
         .replace(/@here/g, '')
         .trim();
 
-    const files = [];
+    const imageEmbeds = [];
 
-    // 添付ファイル（画像）を埋め込み用に収集
+    // 添付画像があれば画像Embed作成
     if (message.attachments.size > 0) {
         for (const attachment of message.attachments.values()) {
             if (attachment.contentType?.startsWith("image")) {
-                files.push(attachment.url);
+                const imageEmbed = new EmbedBuilder()
+                    .setImage(attachment.url)
+                    .setColor(0x00bfff);
+                imageEmbeds.push(imageEmbed.toJSON());
             } else {
                 content += `\n${attachment.url}`;
             }
         }
     }
+
+    // 本文用のEmbed
+    const mainEmbed = new EmbedBuilder()
+        .setDescription(content || '（メッセージなし）')
+        
+        .setColor(0x00bfff)
+        .setTimestamp()
+        .setFooter({ text: message.guild.name });
+    const embedsToSend = [mainEmbed.toJSON(), ...imageEmbeds];
 
     // 他のチャンネルにWebhook送信
     for (const [guildId, entry] of Object.entries(data)) {
@@ -83,10 +95,9 @@ client.on(Events.MessageCreate, async message => {
 
         try {
             await axios.post(entry.webhook_url, {
-                content: content,
                 username: message.author.username,
                 avatar_url: message.author.displayAvatarURL({ dynamic: true }),
-                embeds: files.length > 0 ? files.map(url => ({ image: { url } })) : undefined
+                embeds: embedsToSend
             });
         } catch (err) {
             console.error(`グローバル送信失敗 (${guildId}): ${err.message}`);

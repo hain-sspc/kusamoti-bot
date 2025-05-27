@@ -47,6 +47,6 @@ module.exports = {
 
         saveEconomy(eco);
 
-        await interaction.reply(`✅ ${adjustedUsers}人のユーザーの${type}を${percentage}%調整しました。`);
+        await interaction.reply(" ${adjustedUsers}人のユーザーの${type}を${percentage}%調整しました。");
     },
 };

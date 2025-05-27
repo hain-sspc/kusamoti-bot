@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 
-const globalPath = path.join(__dirname, '../globalchat.json');
+const globalPath = path.join(__dirname, '../data/globalchat.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -16,7 +16,7 @@ module.exports = {
                 .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
 
-    // スラッシュコマンドの登録処理
+    
     async execute(interaction) {
         const channel = interaction.options.getChannel('channel');
         const guildId = interaction.guild.id;
@@ -31,7 +31,7 @@ module.exports = {
             }
         }
 
-        // Webhook 作成 or 再利用
+        // Webhook 作成
         const webhooks = await channel.fetchWebhooks();
         let webhook = webhooks.find(wh => wh.name === 'GlobalChat');
         if (!webhook) {
@@ -59,7 +59,7 @@ module.exports = {
 
         const data = JSON.parse(fs.readFileSync(globalPath, 'utf-8'));
 
-        // 自サーバーの登録確認
+       
         const thisEntry = Object.entries(data).find(([_, entry]) => entry.channel_id === message.channel.id);
         if (!thisEntry) return;
 
@@ -77,7 +77,7 @@ module.exports = {
             embed.image = { url: message.attachments.first().url };
         }
 
-        // 他サーバーのWebhookに送信
+        
         for (const [guildId, entry] of Object.entries(data)) {
             if (entry.channel_id === message.channel.id) continue;
 

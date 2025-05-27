@@ -32,10 +32,10 @@ module.exports = {
 
         if (idx !== -1) {
             guildData.roleRewards[idx].amount = amount;
-            replyText = '✅ 既存のロール設定を更新しました：';
+            replyText = '既存のロール設定を更新しました：';
         } else {
             guildData.roleRewards.push({ role: role.id, amount });
-            replyText = '✅ 新しいロール引き換え設定を追加しました：';
+            replyText = '新しいロール引き換え設定を追加しました：';
         }
 
         saveEconomy(economy);

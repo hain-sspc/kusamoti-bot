@@ -20,7 +20,7 @@ module.exports = {
         const userId = interaction.user.id;
 
         if (fromGuildId === toGuildId) {
-            return interaction.reply({ content: '❌ 同じサーバー間で交換はできません。', ephemeral: true });
+            return interaction.reply({ content: '同じサーバー間で交換はできません。', ephemeral: true });
         }
 
         const eco = loadEconomy();
@@ -34,7 +34,7 @@ module.exports = {
         toUser.balance = toUser.balance || 0;
 
         if (fromUser.balance < amount) {
-            return interaction.reply({ content: '❌ 残高が不足しています。', ephemeral: true });
+            return interaction.reply({ content: '残高が不足しています。', ephemeral: true });
         }
 
         // 各ギルドのコインの総量に基づくレート（例: a / b）
@@ -42,7 +42,7 @@ module.exports = {
         const toTotal = toGuild.totalBalance || 1;
 
         if (toTotal === 0) {
-            return interaction.reply({ content: '❌ 一方のサーバーに供給がありません。', ephemeral: true });
+            return interaction.reply({ content: '一方のサーバーに供給がありません。', ephemeral: true });
         }
 
         const rate = toTotal / fromTotal;
@@ -61,7 +61,7 @@ module.exports = {
 
         return interaction.reply({
             content:
-                `🔄 交換完了！\n` +
+                `交換完了！\n` +
                 `• 支払: ${amount} ${fromCoin}\n` +
                 `• 受取: ${received} ${toCoin}（レート: ${rate.toFixed(3)}）`,
             ephemeral: false

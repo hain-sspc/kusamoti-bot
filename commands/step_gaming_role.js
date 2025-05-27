@@ -3,7 +3,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const config = require('../config.json');
 
-const filePath = path.join(__dirname, '..', 'gamingRoleSettings.json');
+const filePath = path.join(__dirname, '..', 'data/gamingRoleSettings.json');
 
 let hue = 0;
 const colorInterval = 10000;
@@ -44,10 +44,10 @@ module.exports = {
 
         try {
             await fs.writeFile(filePath, JSON.stringify(settings, null, 2), 'utf8');
-            await interaction.reply(`✅ ロール <@&${roleId}> をゲーミングロールとして保存＆虹色変化を開始します。`);
+            await interaction.reply(`ロール <@&${roleId}> をゲーミングロールとして保存＆虹色変化を開始します。`);
         } catch (err) {
             console.error('書き込みエラー:', err);
-            return await interaction.reply('❌ JSONファイルへの書き込みに失敗しました。');
+            return await interaction.reply('JSONファイルへの書き込みに失敗しました。');
         }
 
         // 虹色ループ開始

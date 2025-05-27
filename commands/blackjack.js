@@ -2,7 +2,7 @@
 const { loadEconomy, saveEconomy } = require('../economy');
 
 function drawCard() {
-    const cards = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]; // 数字 + JQK(10) + A(11)
+    const cards = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]; 
     return cards[Math.floor(Math.random() * cards.length)];
 }
 
@@ -34,7 +34,7 @@ module.exports = {
 
         const user = eco.guilds?.[guildId]?.users?.[userId];
         if (!user || user.balance < bet) {
-            return interaction.reply('💸 所持金が足りません。');
+            return interaction.reply('所持金が足りません。');
         }
 
         // カード配布
@@ -46,7 +46,7 @@ module.exports = {
 
         let result = '';
         if (playerTotal > 21) {
-            result = '❌ バースト！あなたの負けです。';
+            result = 'バースト！あなたの負けです。';
             user.balance -= bet;
         } else if (dealerTotal > 21 || playerTotal > dealerTotal) {
             result = '🎉 勝ちました！';

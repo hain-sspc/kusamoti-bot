@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const globalPath = path.join(__dirname, '../globalchat.json');
+const globalPath = path.join(__dirname, '../data/globalchat.json');
 
 module.exports = {
     data: new SlashCommandBuilder()

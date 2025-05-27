@@ -1,7 +1,7 @@
 ﻿const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
-const settingsPath = path.join(__dirname, '../settings.json');
+const settingsPath = path.join(__dirname, '../data/settings.json');
 
 function loadSettings() {
     if (fs.existsSync(settingsPath)) {
@@ -21,7 +21,7 @@ module.exports = {
         const settings = loadSettings()[guildId];
 
         if (!Array.isArray(settings) || settings.length === 0) {
-            return interaction.reply({ content: '⚠️ 設定がありません。', ephemeral: true });
+            return interaction.reply({ content: '設定がありません。', ephemeral: true });
         }
 
         // Embed フィールド生成

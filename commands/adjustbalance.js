@@ -19,7 +19,7 @@ module.exports = {
         const coinName = getCoinName(guildId);
         if (!coinName) {
             return interaction.reply({
-                content: '⚠️ このサーバーではまだコインが設定されていません。\nまず `/step_coins` を実行して経済システムを有効化してください。',
+                content: 'このサーバーではまだコインが設定されていません。\nまず `/step_coins` を実行して経済システムを有効化してください。',
                 ephemeral: true
             });
         }
@@ -27,7 +27,7 @@ module.exports = {
         const amount = interaction.options.getInteger('amount');
 
         if (isNaN(userInput) || userInput.length < 17) {
-            return interaction.reply({ content: '⚠ ユーザーIDが正しくありません。', ephemeral: true });
+            return interaction.reply({ content: 'ユーザーIDが正しくありません。', ephemeral: true });
         }
 
         try {
@@ -36,10 +36,10 @@ module.exports = {
             const newBalance = getBalance(guildId, user.id);
             const coinName = getCoinName(guildId) || 'コイン';
 
-            await interaction.reply(`✅ ${user.tag} の残高を ${amount >= 0 ? `+${amount}` : amount} 調整しました。\n💰 現在の残高: ${newBalance} ${coinName}`);
+            await interaction.reply(` ${user.tag} の残高を ${amount >= 0 ? `+${amount}` : amount} 調整しました。\n現在の残高: ${newBalance} ${coinName}`);
         } catch (error) {
-            console.error('❌ ユーザー取得エラー:', error);
-            return interaction.reply({ content: '⚠ ユーザーが見つかりませんでした。', ephemeral: true });
+            console.error('ユーザー取得エラー:', error);
+            return interaction.reply({ content: 'ユーザーが見つかりませんでした。', ephemeral: true });
         }
     }
 };

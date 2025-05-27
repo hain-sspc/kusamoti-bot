@@ -31,18 +31,18 @@ module.exports = {
         const coinName = getCoinName(guildId) || 'コイン';
 
         if (amount <= 0) {
-            return interaction.reply({ content: '⚠ 金額は1以上で指定してください。', ephemeral: true });
+            return interaction.reply({ content: '金額は1以上で指定してください。', ephemeral: true });
         }
 
         if (target.id === senderId) {
-            return interaction.reply({ content: '⚠ 自分自身には送金できません。', ephemeral: true });
+            return interaction.reply({ content: '自分自身には送金できません。', ephemeral: true });
         }
 
         sender.balance = sender.balance || 0;
         receiver.balance = receiver.balance || 0;
 
         if (sender.balance < amount) {
-            return interaction.reply({ content: '💸 所持金が足りません。', ephemeral: true });
+            return interaction.reply({ content: ' 所持金が足りません。', ephemeral: true });
         }
 
         const taxRate = loadTaxRate().payTaxRate || 0.05;

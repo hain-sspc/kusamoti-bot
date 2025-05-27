@@ -35,7 +35,7 @@ module.exports = {
         const user = eco.guilds?.[guildId]?.users?.[userId];
 
         if (!user) {
-            return interaction.reply('🚓 ユーザーデータが見つかりませんでした。');
+            return interaction.reply('ユーザーデータが見つかりませんでした。');
         }
 
         const success = Math.random() < 0.5;

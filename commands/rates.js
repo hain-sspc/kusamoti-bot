@@ -44,7 +44,7 @@ module.exports = {
 
         const initialEmbed = generateEmbed();
         if (!initialEmbed) {
-            return interaction.reply('🔍 有効なコインはまだありません。');
+            return interaction.reply('有効なコインはまだありません。');
         }
 
         const message = await interaction.reply({ embeds: [initialEmbed], fetchReply: true });
@@ -57,7 +57,7 @@ module.exports = {
 
                 await message.edit({ embeds: [updatedEmbed] });
             } catch (err) {
-                console.error('❌ レートメッセージの更新に失敗しました。自動更新を停止します:', err);
+                console.error('レートメッセージの更新に失敗しました。自動更新を停止します:', err);
                 // 通常はメッセージが消えてるかBotに編集権限がない場合
                 clearInterval(this);
             }

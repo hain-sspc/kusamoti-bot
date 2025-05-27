@@ -6,7 +6,7 @@ const { getCoinName } = require('../economy');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('leaderboard')
-        .setDescription('💰 所持金ランキングを表示します'),
+        .setDescription('所持金ランキングを表示します'),
     async execute(interaction) {
         try {
             await interaction.deferReply(); // 応答を延期
@@ -17,7 +17,7 @@ module.exports = {
 
             const guildData = economyData.guilds?.[guildId];
             if (!guildData || !guildData.users) {
-                return interaction.editReply('⚠ このサーバーには経済データがありません。');
+                return interaction.editReply('このサーバーには経済データがありません。/step_coinsで設定してください');
             }
 
             const sorted = Object.entries(guildData.users)
@@ -48,9 +48,9 @@ module.exports = {
         } catch (error) {
             console.error(error);
             if (interaction.deferred || interaction.replied) {
-                await interaction.followUp({ content: '❌ エラーが発生しました。', ephemeral: true });
+                await interaction.followUp({ content: 'エラーが発生しました。', ephemeral: true });
             } else {
-                await interaction.reply({ content: '❌ エラーが発生しました。', ephemeral: true });
+                await interaction.reply({ content: 'エラーが発生しました。', ephemeral: true });
             }
         }
     },

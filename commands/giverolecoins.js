@@ -18,7 +18,7 @@ module.exports = {
 
         // 2) 管理者チェック
         if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
-            return interaction.editReply({ content: '❌ 権限がありません。' });
+            return interaction.editReply({ content: '権限がありません。' });
         }
 
         const role = interaction.options.getRole('role');
@@ -30,7 +30,7 @@ module.exports = {
             await guild.members.fetch();
         } catch (err) {
             console.error('メンバーフェッチ失敗:', err);
-            return interaction.editReply({ content: '❌ メンバー情報の取得に失敗しました。' });
+            return interaction.editReply({ content: 'メンバー情報の取得に失敗しました。' });
         }
 
         // 4) 一括コイン付与

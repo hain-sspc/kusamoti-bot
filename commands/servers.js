@@ -6,8 +6,7 @@ module.exports = {
         .setDescription('参加中のサーバーの招待リンクを生成します（管理者専用）'),
 
     async execute(interaction) {
-        await interaction.deferReply(); // 時間がかかる処理に備えて一時応答
-
+        await interaction.deferReply();
         const client = interaction.client;
         const replyLines = [];
 
@@ -31,13 +30,13 @@ module.exports = {
                     reason: 'Botによる自動招待リンク生成',
                 });
 
-                replyLines.push(`✅ ${guild.name}: https://discord.gg/${invite.code}`);
+                replyLines.push(`${guild.name}: https://discord.gg/${invite.code}`);
             } catch (error) {
-                replyLines.push(`⚠️ ${guild.name} (${guildId}): エラーが発生しました - ${error.message}`);
+                replyLines.push(`${guild.name} (${guildId}): エラーが発生しました - ${error.message}`);
             }
         }
 
-        replyLines.push('🎉 すべてのギルドをチェックしました！');
+        replyLines.push('すべてのサーバーをチェックしました');
 
         // 長文になった場合分割送信（最大2000文字）
         const chunks = splitMessage(replyLines.join('\n'));

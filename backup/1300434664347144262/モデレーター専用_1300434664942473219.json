@@ -1,0 +1,998 @@
+[
+  {
+    "id": "1300435976971227230",
+    "author": "automod#0000",
+    "content": "",
+    "timestamp": "2024-10-28T12:28:17.842Z"
+  },
+  {
+    "id": "1300435977843642408",
+    "author": "Community Updates#0001",
+    "content": "This channel has been set up to receive official Discord announcements for admins and moderators of Community servers. We'll let you know about important updates, such as new moderation features or changes to your server's eligibility for Server Discovery, here.\n\nYou can change which channel these messages are sent to at any time inside Server Settings. We recommend choosing your staff channel, as some information may be sensitive to your server.\n\nThanks for choosing Discord as the place to build your community!",
+    "timestamp": "2024-10-28T12:28:18.050Z"
+  },
+  {
+    "id": "1320303504790917192",
+    "author": "hokorinsabu",
+    "content": "こんにちわーどうも、草餅過激連合軍の幹部ですどうも、草餅過激連合軍の幹部です1週間以上何も活動がないとbanされますのでご了承ください",
+    "timestamp": "2024-12-22T08:14:45.595Z"
+  },
+  {
+    "id": "1320303592950730784",
+    "author": "hokorinsabu",
+    "content": "上↑新規に送って",
+    "timestamp": "2024-12-22T08:15:06.614Z"
+  },
+  {
+    "id": "1320337348504064040",
+    "author": "totsuka_saituyowwww",
+    "content": "おけ",
+    "timestamp": "2024-12-22T10:29:14.565Z"
+  },
+  {
+    "id": "1321082986439114837",
+    "author": "hokorinsabu",
+    "content": "<@&1309763361499774986>",
+    "timestamp": "2024-12-24T11:52:08.502Z"
+  },
+  {
+    "id": "1321082997956546580",
+    "author": "hokorinsabu",
+    "content": "<@&1320364692987973662>",
+    "timestamp": "2024-12-24T11:52:11.248Z"
+  },
+  {
+    "id": "1321083024221278228",
+    "author": "hokorinsabu",
+    "content": "<@&1319253062337957962>",
+    "timestamp": "2024-12-24T11:52:17.510Z"
+  },
+  {
+    "id": "1321083304459374682",
+    "author": "hokorinsabu",
+    "content": "湯部江原ヤヱ子",
+    "timestamp": "2024-12-24T11:53:24.324Z"
+  },
+  {
+    "id": "1321083333744132177",
+    "author": "hokorinsabu",
+    "content": "こいつ正直いらんくね？",
+    "timestamp": "2024-12-24T11:53:31.306Z"
+  },
+  {
+    "id": "1321096492815220817",
+    "author": "_.0_.21_.",
+    "content": "消した",
+    "timestamp": "2024-12-24T12:45:48.673Z"
+  },
+  {
+    "id": "1321438203445514271",
+    "author": "hokorinsabu",
+    "content": "おｋ",
+    "timestamp": "2024-12-25T11:23:38.836Z"
+  },
+  {
+    "id": "1325093500206710826",
+    "author": "totsuka_saituyowwww",
+    "content": ">>setup muterole",
+    "timestamp": "2025-01-04T13:28:29.496Z"
+  },
+  {
+    "id": "1325093516807766029",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Muted role setup started!\n<:vSuccess:850102850491121725> Role initialized!\n<:vSuccess:850102850491121725> Category overrides complete!\n<:vSuccess:850102850491121725> Text Channel overrides complete!\n<:vSuccess:850102850491121725> Voice Channel overrides complete!\n\n<:vSuccess:850102850491121725> Muted role setup has completed!",
+    "timestamp": "2025-01-04T13:28:33.454Z"
+  },
+  {
+    "id": "1325293730223358100",
+    "author": "totsuka_saituyowwww",
+    "content": ">>punishments 1 mute 1m",
+    "timestamp": "2025-01-05T02:44:08.052Z"
+  },
+  {
+    "id": "1325293731129200680",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Users will now be `muted` for **1** minutes upon reaching `1` strikes.",
+    "timestamp": "2025-01-05T02:44:08.268Z"
+  },
+  {
+    "id": "1325293813144485909",
+    "author": "totsuka_saituyowwww",
+    "content": ">>punishments 2 mute 3m",
+    "timestamp": "2025-01-05T02:44:27.822Z"
+  },
+  {
+    "id": "1325293814356901938",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Users will now be `muted` for **3** minutes upon reaching `2` strikes.",
+    "timestamp": "2025-01-05T02:44:28.111Z"
+  },
+  {
+    "id": "1325293914168492113",
+    "author": "totsuka_saituyowwww",
+    "content": ">>punishments 3 mute 5m",
+    "timestamp": "2025-01-05T02:44:51.908Z"
+  },
+  {
+    "id": "1325293915640959066",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Users will now be `muted` for **5** minutes upon reaching `3` strikes.",
+    "timestamp": "2025-01-05T02:44:52.259Z"
+  },
+  {
+    "id": "1325293996116807711",
+    "author": "totsuka_saituyowwww",
+    "content": ">>punishments 4 mute 12h",
+    "timestamp": "2025-01-05T02:45:11.446Z"
+  },
+  {
+    "id": "1325293997001937126",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Users will now be `muted` for **12** hours upon reaching `4` strikes.",
+    "timestamp": "2025-01-05T02:45:11.657Z"
+  },
+  {
+    "id": "1325294069584232559",
+    "author": "totsuka_saituyowwww",
+    "content": ">>punishments 5 kick",
+    "timestamp": "2025-01-05T02:45:28.962Z"
+  },
+  {
+    "id": "1325294070351921246",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Users will now be `kicked` upon reaching `5` strikes.",
+    "timestamp": "2025-01-05T02:45:29.145Z"
+  },
+  {
+    "id": "1325294155538370622",
+    "author": "totsuka_saituyowwww",
+    "content": ">>punishments 6 ban",
+    "timestamp": "2025-01-05T02:45:49.455Z"
+  },
+  {
+    "id": "1325294156758646876",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Users will now be `banned` upon reaching `6` strikes.",
+    "timestamp": "2025-01-05T02:45:49.746Z"
+  },
+  {
+    "id": "1325295430485151755",
+    "author": "totsuka_saituyowwww",
+    "content": ">>ignore 1309761314587017279",
+    "timestamp": "2025-01-05T02:50:53.426Z"
+  },
+  {
+    "id": "1325295431554568232",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Automod is now ignoring channel <#1309761314587017279>",
+    "timestamp": "2025-01-05T02:50:53.681Z"
+  },
+  {
+    "id": "1325295520498974823",
+    "author": "totsuka_saituyowwww",
+    "content": ">>antiinvite 1",
+    "timestamp": "2025-01-05T02:51:14.887Z"
+  },
+  {
+    "id": "1325295521572847667",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Users will now receive `1` strikes for posting invite links.",
+    "timestamp": "2025-01-05T02:51:15.143Z"
+  },
+  {
+    "id": "1325295592569831476",
+    "author": "totsuka_saituyowwww",
+    "content": ">>antiduplicate 4 3 2",
+    "timestamp": "2025-01-05T02:51:32.070Z"
+  },
+  {
+    "id": "1325295593815412878",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Anti-Duplicate will now delete duplicates starting at duplicate **3** and begin assigning **2** strikes for each duplicate starting at duplicate **4**.",
+    "timestamp": "2025-01-05T02:51:32.367Z"
+  },
+  {
+    "id": "1325295673201131550",
+    "author": "totsuka_saituyowwww",
+    "content": ">>maxmentions 4",
+    "timestamp": "2025-01-05T02:51:51.294Z"
+  },
+  {
+    "id": "1325295674169757778",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Set the maximum allowed mentions to **4** users. Messages containing more than **4** mentions will be deleted and the user will obtain 1 strike for every mention above the maximum.\n\nTo set the maximum allowed role mentions, use `>>maxmentions roles <number>`",
+    "timestamp": "2025-01-05T02:51:51.525Z"
+  },
+  {
+    "id": "1325295760836792454",
+    "author": "totsuka_saituyowwww",
+    "content": ">>maxmentions role 2",
+    "timestamp": "2025-01-05T02:52:12.188Z"
+  },
+  {
+    "id": "1325295761704878184",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Set the maximum allowed role mentions to **2** roles.",
+    "timestamp": "2025-01-05T02:52:12.395Z"
+  },
+  {
+    "id": "1325295834509873174",
+    "author": "totsuka_saituyowwww",
+    "content": ">>maxlines 20",
+    "timestamp": "2025-01-05T02:52:29.753Z"
+  },
+  {
+    "id": "1325295835243872267",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Messages longer than `20` lines will now be automatically deleted, and users will receive strikes for every additional multiple of up to `20` lines.",
+    "timestamp": "2025-01-05T02:52:29.928Z"
+  },
+  {
+    "id": "1325295885659148401",
+    "author": "totsuka_saituyowwww",
+    "content": ">>autoraidmode 3/5",
+    "timestamp": "2025-01-05T02:52:41.948Z"
+  },
+  {
+    "id": "1325295886586085479",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Anti-Raid mode will be enabled automatically when there are `3` joins in `5` seconds.",
+    "timestamp": "2025-01-05T02:52:42.169Z"
+  },
+  {
+    "id": "1325295951941861438",
+    "author": "totsuka_saituyowwww",
+    "content": ">>antiraidmode on",
+    "timestamp": "2025-01-05T02:52:57.751Z"
+  },
+  {
+    "id": "1325295952868933685",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Anti-Raid Mode enabled. New members will be prevented from joining.",
+    "timestamp": "2025-01-05T02:52:57.972Z"
+  },
+  {
+    "id": "1325295984192000103",
+    "author": "totsuka_saituyowwww",
+    "content": "よく分からんけど、これでいいんかな",
+    "timestamp": "2025-01-05T02:53:05.440Z"
+  },
+  {
+    "id": "1325296444340568156",
+    "author": "totsuka_saituyowwww",
+    "content": "<@&1325093517818724464>",
+    "timestamp": "2025-01-05T02:54:55.148Z"
+  },
+  {
+    "id": "1325318369615806505",
+    "author": "totsuka_saituyowwww",
+    "content": ">>settings",
+    "timestamp": "2025-01-05T04:22:02.541Z"
+  },
+  {
+    "id": "1325318370316390420",
+    "author": "Vortex#8540",
+    "content": "**Vortex** settings on **草餅過激派連合軍 | SSPC**:",
+    "timestamp": "2025-01-05T04:22:02.708Z"
+  },
+  {
+    "id": "1325318736147648612",
+    "author": "totsuka_saituyowwww",
+    "content": ">>antieveryone 1",
+    "timestamp": "2025-01-05T04:23:29.929Z"
+  },
+  {
+    "id": "1325318737032646697",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Users will now receive `1` strikes for attempting to ping @еveryone/here. This also considers pingable roles called 'everyone' and 'here'. This will not affect users that actually have permission to ping everyone. Pinging oneself or bots do not count towards this total. Duplicate pings in the same message are also not counted towards this total (pinging the same person 3 times only counts as 1 ping).",
+    "timestamp": "2025-01-05T04:23:30.140Z"
+  },
+  {
+    "id": "1325319084820267151",
+    "author": "totsuka_saituyowwww",
+    "content": ">>maxlines 3",
+    "timestamp": "2025-01-05T04:24:53.059Z"
+  },
+  {
+    "id": "1325319085973569649",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Messages longer than `3` lines will now be automatically deleted, and users will receive strikes for every additional multiple of up to `3` lines.",
+    "timestamp": "2025-01-05T04:24:53.334Z"
+  },
+  {
+    "id": "1325319494368755827",
+    "author": "totsuka_saituyowwww",
+    "content": ">>antiduplicate 3 3 1",
+    "timestamp": "2025-01-05T04:26:30.703Z"
+  },
+  {
+    "id": "1325319495568588871",
+    "author": "Vortex#8540",
+    "content": "<:vSuccess:850102850491121725> Anti-Duplicate will now delete duplicates starting at duplicate **3** and begin assigning **1** strikes for each duplicate starting at duplicate **3**.",
+    "timestamp": "2025-01-05T04:26:30.989Z"
+  },
+  {
+    "id": "1325674130862903367",
+    "author": "automod#0000",
+    "content": "",
+    "timestamp": "2025-01-06T03:55:42.632Z"
+  },
+  {
+    "id": "1325687438038929449",
+    "author": "totsuka_saituyowwww",
+    "content": "",
+    "timestamp": "2025-01-06T04:48:35.310Z"
+  },
+  {
+    "id": "1339470457258381374",
+    "author": "totsuka_saituyowwww",
+    "content": "<@282859044593598464>",
+    "timestamp": "2025-02-13T05:37:23.168Z"
+  },
+  {
+    "id": "1358671059372474451",
+    "author": "automod#0000",
+    "content": "",
+    "timestamp": "2025-04-07T05:13:43.442Z"
+  },
+  {
+    "id": "1358673679780679721",
+    "author": "totsuka_saituyowwww",
+    "content": "",
+    "timestamp": "2025-04-07T05:24:08.196Z"
+  },
+  {
+    "id": "1358675587052470425",
+    "author": "caobingbujiaonotetsuchi_58433",
+    "content": "？",
+    "timestamp": "2025-04-07T05:31:42.925Z"
+  },
+  {
+    "id": "1368802414903431312",
+    "author": "automod#0000",
+    "content": "",
+    "timestamp": "2025-05-05T04:12:06.832Z"
+  },
+  {
+    "id": "1368802494213263412",
+    "author": "caobingbujiaonotetsuchi_58433",
+    "content": "なんだ",
+    "timestamp": "2025-05-05T04:12:25.741Z"
+  },
+  {
+    "id": "1368802635012116510",
+    "author": "caobingbujiaonotetsuchi_58433",
+    "content": "2025-05-05T06:12:58.223000+00:00",
+    "timestamp": "2025-05-05T04:12:59.310Z"
+  },
+  {
+    "id": "1368805184943161404",
+    "author": "caobingbujiaonotetsuchi_58433",
+    "content": "2025-05-05T08:23:06.021000+00:00",
+    "timestamp": "2025-05-05T04:23:07.261Z"
+  },
+  {
+    "id": "1368821589474541578",
+    "author": "hain_sspc",
+    "content": "",
+    "timestamp": "2025-05-05T05:28:18.406Z"
+  },
+  {
+    "id": "1368821754365087854",
+    "author": "caobingbujiaonotetsuchi_58433",
+    "content": "🙇",
+    "timestamp": "2025-05-05T05:28:57.719Z"
+  },
+  {
+    "id": "1368836743381651507",
+    "author": "caobingbujiaonotetsuchi_58433",
+    "content": "2025-05-06T06:28:30.412000+00:00",
+    "timestamp": "2025-05-05T06:28:31.379Z"
+  },
+  {
+    "id": "1368836819134709823",
+    "author": "hain_sspc",
+    "content": "",
+    "timestamp": "2025-05-05T06:28:49.440Z"
+  },
+  {
+    "id": "1368836891276869663",
+    "author": "caobingbujiaonotetsuchi_58433",
+    "content": "あぶね😢",
+    "timestamp": "2025-05-05T06:29:06.640Z"
+  },
+  {
+    "id": "1368865187855208448",
+    "author": "hain_sspc",
+    "content": "2025-05-05T10:21:32.641000+00:00",
+    "timestamp": "2025-05-05T08:21:33.070Z"
+  },
+  {
+    "id": "1368870509260963940",
+    "author": "hain_sspc",
+    "content": "",
+    "timestamp": "2025-05-05T08:42:41.792Z"
+  },
+  {
+    "id": "1373664119789715466",
+    "author": "nawadan1732",
+    "content": "<@1064739255823372449>",
+    "timestamp": "2025-05-18T14:10:47.603Z"
+  },
+  {
+    "id": "1373664155600683123",
+    "author": "nawadan1732",
+    "content": "<@1207644451485253713>",
+    "timestamp": "2025-05-18T14:10:56.141Z"
+  },
+  {
+    "id": "1373664179042390066",
+    "author": "nawadan1732",
+    "content": "どうしよう",
+    "timestamp": "2025-05-18T14:11:01.730Z"
+  },
+  {
+    "id": "1373664202907975731",
+    "author": "nawadan1732",
+    "content": "雑談がエグいことなってる",
+    "timestamp": "2025-05-18T14:11:07.420Z"
+  },
+  {
+    "id": "1373678672527102094",
+    "author": "miznobu",
+    "content": "やばいですね…",
+    "timestamp": "2025-05-18T15:08:37.246Z"
+  },
+  {
+    "id": "1373680289662111754",
+    "author": "nawadan1732",
+    "content": "どうします",
+    "timestamp": "2025-05-18T15:15:02.801Z"
+  },
+  {
+    "id": "1373680316073639998",
+    "author": "nawadan1732",
+    "content": "タイムアウト？KICK？BAN？",
+    "timestamp": "2025-05-18T15:15:09.098Z"
+  },
+  {
+    "id": "1373680354598064239",
+    "author": "nawadan1732",
+    "content": "<@1081554367494246460>",
+    "timestamp": "2025-05-18T15:15:18.283Z"
+  },
+  {
+    "id": "1373681622754525194",
+    "author": "nawadan1732",
+    "content": "<@1081554367494246460>",
+    "timestamp": "2025-05-18T15:20:20.635Z"
+  },
+  {
+    "id": "1373681655067181106",
+    "author": "nawadan1732",
+    "content": "処理でいいですか？",
+    "timestamp": "2025-05-18T15:20:28.339Z"
+  },
+  {
+    "id": "1373681666337411213",
+    "author": "totsuka_saituyowwww",
+    "content": "そのままでいいよ",
+    "timestamp": "2025-05-18T15:20:31.026Z"
+  },
+  {
+    "id": "1373681682279960686",
+    "author": "nawadan1732",
+    "content": "おk",
+    "timestamp": "2025-05-18T15:20:34.827Z"
+  },
+  {
+    "id": "1373681690391875584",
+    "author": "totsuka_saituyowwww",
+    "content": "なんかおもろいし",
+    "timestamp": "2025-05-18T15:20:36.761Z"
+  },
+  {
+    "id": "1373681717344473239",
+    "author": "nawadan1732",
+    "content": "余裕過ぎて草",
+    "timestamp": "2025-05-18T15:20:43.187Z"
+  },
+  {
+    "id": "1373683080526696551",
+    "author": "nawadan1732",
+    "content": "# ,S\n# ,   S\n# ,      P\n# ,         C\n# 裏切りおぜう潰せ\n# SSPCおぜうの悪行許さない\n# 反乱起こせ\n# いつでも歓迎、草餅派閥。\n# [草餅過激派連合軍に参加](https://discord.gg/vdjAbEyYHC)\n[画像](https://imgur.com/uQTZqNL)\n[gif](https://cdn.discordapp.com/attachments/1300434664942473219/1373685604566564945/IMG_9147.gif?ex=682b4fe9&is=6829fe69&hm=01c7bd3f01f2837f90098084cd735f13a79f93f147f724e30ccb7a2165c16618&)",
+    "timestamp": "2025-05-18T15:26:08.195Z"
+  },
+  {
+    "id": "1373683607410966628",
+    "author": "nawadan1732",
+    "content": "<@1081554367494246460>",
+    "timestamp": "2025-05-18T15:28:13.814Z"
+  },
+  {
+    "id": "1373683628743331993",
+    "author": "nawadan1732",
+    "content": "これダメかな",
+    "timestamp": "2025-05-18T15:28:18.900Z"
+  },
+  {
+    "id": "1373683670715732132",
+    "author": "totsuka_saituyowwww",
+    "content": "おぜう完全に敵対する？",
+    "timestamp": "2025-05-18T15:28:28.907Z"
+  },
+  {
+    "id": "1373683698427236483",
+    "author": "nawadan1732",
+    "content": "いや",
+    "timestamp": "2025-05-18T15:28:35.514Z"
+  },
+  {
+    "id": "1373683728949317775",
+    "author": "nawadan1732",
+    "content": "hainからもう同盟解除も通告",
+    "timestamp": "2025-05-18T15:28:42.791Z"
+  },
+  {
+    "id": "1373683756539449394",
+    "author": "totsuka_saituyowwww",
+    "content": "あね",
+    "timestamp": "2025-05-18T15:28:49.369Z"
+  },
+  {
+    "id": "1373683763325964308",
+    "author": "nawadan1732",
+    "content": "色々と動いてるし",
+    "timestamp": "2025-05-18T15:28:50.987Z"
+  },
+  {
+    "id": "1373683776164466788",
+    "author": "nawadan1732",
+    "content": "そろそろいいのでは",
+    "timestamp": "2025-05-18T15:28:54.048Z"
+  },
+  {
+    "id": "1373683917105791010",
+    "author": "totsuka_saituyowwww",
+    "content": "いいね",
+    "timestamp": "2025-05-18T15:29:27.651Z"
+  },
+  {
+    "id": "1373683961980522537",
+    "author": "totsuka_saituyowwww",
+    "content": "信用出来る荒らさばAARRしかないわ",
+    "timestamp": "2025-05-18T15:29:38.350Z"
+  },
+  {
+    "id": "1373684158320218265",
+    "author": "nawadan1732",
+    "content": "わかる",
+    "timestamp": "2025-05-18T15:30:25.161Z"
+  },
+  {
+    "id": "1373684516992057457",
+    "author": "nawadan1732",
+    "content": "",
+    "timestamp": "2025-05-18T15:31:50.675Z"
+  },
+  {
+    "id": "1373685604856107102",
+    "author": "nawadan1732",
+    "content": "",
+    "timestamp": "2025-05-18T15:36:10.042Z"
+  },
+  {
+    "id": "1373685995559452854",
+    "author": "totsuka_saituyowwww",
+    "content": "<@1292062407132446751> これ言ってることちがくね？",
+    "timestamp": "2025-05-18T15:37:43.193Z"
+  },
+  {
+    "id": "1373686123511025764",
+    "author": "nawadan1732",
+    "content": "ね",
+    "timestamp": "2025-05-18T15:38:13.699Z"
+  },
+  {
+    "id": "1373686144222498998",
+    "author": "nawadan1732",
+    "content": "平然とデマ流すなボケ",
+    "timestamp": "2025-05-18T15:38:18.637Z"
+  },
+  {
+    "id": "1373686172362084414",
+    "author": "totsuka_saituyowwww",
+    "content": "かすしね",
+    "timestamp": "2025-05-18T15:38:25.346Z"
+  },
+  {
+    "id": "1373686200904323143",
+    "author": "nawadan1732",
+    "content": "やっぱ敵対でいいと思います",
+    "timestamp": "2025-05-18T15:38:32.151Z"
+  },
+  {
+    "id": "1373686235033239733",
+    "author": "nawadan1732",
+    "content": "上場借用の余地なし",
+    "timestamp": "2025-05-18T15:38:40.288Z"
+  },
+  {
+    "id": "1373686239105908829",
+    "author": "totsuka_saituyowwww",
+    "content": "うん",
+    "timestamp": "2025-05-18T15:38:41.259Z"
+  },
+  {
+    "id": "1373686299453821061",
+    "author": "totsuka_saituyowwww",
+    "content": "おぜつどの悪行バラすか",
+    "timestamp": "2025-05-18T15:38:55.647Z"
+  },
+  {
+    "id": "1373686974648549567",
+    "author": "totsuka_saituyowwww",
+    "content": "<@1207644451485253713>",
+    "timestamp": "2025-05-18T15:41:36.626Z"
+  },
+  {
+    "id": "1373687012204351508",
+    "author": "totsuka_saituyowwww",
+    "content": "おぜうのギルドタグ消して",
+    "timestamp": "2025-05-18T15:41:45.580Z"
+  },
+  {
+    "id": "1373688894624763905",
+    "author": "nawadan1732",
+    "content": "どうやって",
+    "timestamp": "2025-05-18T15:49:14.384Z"
+  },
+  {
+    "id": "1373688909338513408",
+    "author": "nawadan1732",
+    "content": "<@1081554367494246460>",
+    "timestamp": "2025-05-18T15:49:17.892Z"
+  },
+  {
+    "id": "1373688988430372926",
+    "author": "totsuka_saituyowwww",
+    "content": "けしてじゃなかった",
+    "timestamp": "2025-05-18T15:49:36.749Z"
+  },
+  {
+    "id": "1373689007430434826",
+    "author": "totsuka_saituyowwww",
+    "content": "のけてだ",
+    "timestamp": "2025-05-18T15:49:41.279Z"
+  },
+  {
+    "id": "1373689088690880553",
+    "author": "nawadan1732",
+    "content": "あね",
+    "timestamp": "2025-05-18T15:50:00.653Z"
+  },
+  {
+    "id": "1373689253485219933",
+    "author": "totsuka_saituyowwww",
+    "content": "おぜつどは鯖民の個人情報を抜き取る害悪サーバー🙀",
+    "timestamp": "2025-05-18T15:50:39.943Z"
+  },
+  {
+    "id": "1373906776826581134",
+    "author": "nawadan1732",
+    "content": "今更？w",
+    "timestamp": "2025-05-19T06:15:01.549Z"
+  },
+  {
+    "id": "1373906822351683685",
+    "author": "nawadan1732",
+    "content": "あいつそれ平気で晒すし",
+    "timestamp": "2025-05-19T06:15:12.403Z"
+  },
+  {
+    "id": "1373906858384818186",
+    "author": "nawadan1732",
+    "content": "手動認証の方が断然いいで",
+    "timestamp": "2025-05-19T06:15:20.994Z"
+  },
+  {
+    "id": "1373908992597819482",
+    "author": "nawadan1732",
+    "content": "<@1330438210504884225> <@1354248569695244380>",
+    "timestamp": "2025-05-19T06:23:49.830Z"
+  },
+  {
+    "id": "1373909673207402586",
+    "author": "nawadan1732",
+    "content": "<@1064739255823372449>",
+    "timestamp": "2025-05-19T06:26:32.100Z"
+  },
+  {
+    "id": "1373910036572799037",
+    "author": "miznobu",
+    "content": "？",
+    "timestamp": "2025-05-19T06:27:58.733Z"
+  },
+  {
+    "id": "1373929598827364382",
+    "author": "nawadan1732",
+    "content": "いや",
+    "timestamp": "2025-05-19T07:45:42.738Z"
+  },
+  {
+    "id": "1373929625461461042",
+    "author": "nawadan1732",
+    "content": "おぜうたちBANする話になった",
+    "timestamp": "2025-05-19T07:45:49.088Z"
+  },
+  {
+    "id": "1373935130649034752",
+    "author": "nawadan1732",
+    "content": "",
+    "timestamp": "2025-05-19T08:07:41.627Z"
+  },
+  {
+    "id": "1373935133559619695",
+    "author": "nawadan1732",
+    "content": "<@1330438210504884225>",
+    "timestamp": "2025-05-19T08:07:42.321Z"
+  },
+  {
+    "id": "1373935146868412428",
+    "author": "nawadan1732",
+    "content": "こいつら焦ってるw w",
+    "timestamp": "2025-05-19T08:07:45.494Z"
+  },
+  {
+    "id": "1373960655576502334",
+    "author": "automod#0000",
+    "content": "",
+    "timestamp": "2025-05-19T09:49:07.244Z"
+  },
+  {
+    "id": "1373961790488186920",
+    "author": "hain_sspc",
+    "content": "2025-05-20T09:53:37.293000+00:00",
+    "timestamp": "2025-05-19T09:53:37.828Z"
+  },
+  {
+    "id": "1373967684839936050",
+    "author": "hain_sspc",
+    "content": "2025-05-19T12:17:02.627000+00:00",
+    "timestamp": "2025-05-19T10:17:03.151Z"
+  },
+  {
+    "id": "1373995575602839602",
+    "author": "nawadan1732",
+    "content": "<@1330438210504884225>",
+    "timestamp": "2025-05-19T12:07:52.827Z"
+  },
+  {
+    "id": "1373995583819481210",
+    "author": "nawadan1732",
+    "content": "なんかあったん",
+    "timestamp": "2025-05-19T12:07:54.786Z"
+  },
+  {
+    "id": "1373997177944412310",
+    "author": "nawadan1732",
+    "content": "2025-05-20T12:14:14.458000+00:00",
+    "timestamp": "2025-05-19T12:14:14.855Z"
+  },
+  {
+    "id": "1373997687812395059",
+    "author": "nawadan1732",
+    "content": "<@938078501070864395>",
+    "timestamp": "2025-05-19T12:16:16.417Z"
+  },
+  {
+    "id": "1373997772428279890",
+    "author": "tetsuchi0096_15456",
+    "content": "そいつもう幹部じゃない",
+    "timestamp": "2025-05-19T12:16:36.591Z"
+  },
+  {
+    "id": "1373997787133251628",
+    "author": "nawadan1732",
+    "content": "とりあえず1週間toしといた",
+    "timestamp": "2025-05-19T12:16:40.097Z"
+  },
+  {
+    "id": "1373997791034212502",
+    "author": "tetsuchi0096_15456",
+    "content": "おぜう民",
+    "timestamp": "2025-05-19T12:16:41.027Z"
+  },
+  {
+    "id": "1373997811338580040",
+    "author": "nawadan1732",
+    "content": "知っとるで",
+    "timestamp": "2025-05-19T12:16:45.868Z"
+  },
+  {
+    "id": "1373997859900362852",
+    "author": "tetsuchi0096_15456",
+    "content": "👍",
+    "timestamp": "2025-05-19T12:16:57.446Z"
+  },
+  {
+    "id": "1373997898626367559",
+    "author": "nawadan1732",
+    "content": "",
+    "timestamp": "2025-05-19T12:17:06.679Z"
+  },
+  {
+    "id": "1373998274998042747",
+    "author": "tetsuchi0096_15456",
+    "content": "😇",
+    "timestamp": "2025-05-19T12:18:36.413Z"
+  },
+  {
+    "id": "1374004338707660831",
+    "author": "nawadan1732",
+    "content": "@everyone \n\n# ,S\n# ,   S\n# ,      P\n# ,         C\n# 裏切りおぜう潰せ\n# SSPCおぜうの悪行許さない\n# 反乱起こせ\n# いつでも歓迎、草餅派閥。\n# [草餅過激派連合軍に参加](https://discord.gg/vdjAbEyYHC)\n[画像](https://imgur.com/uQTZqNL)\n[gif](https://cdn.discordapp.com/attachments/1300434664942473219/1373685604566564945/IMG_9147.gif?ex=682b4fe9&is=6829fe69&hm=01c7bd3f01f2837f90098084cd735f13a79f93f147f724e30ccb7a2165c16618&)",
+    "timestamp": "2025-05-19T12:42:42.114Z"
+  },
+  {
+    "id": "1374004388439523408",
+    "author": "nawadan1732",
+    "content": "これ使うのあり",
+    "timestamp": "2025-05-19T12:42:53.971Z"
+  },
+  {
+    "id": "1374004406999056455",
+    "author": "totsuka_saituyowwww",
+    "content": "いいですねえ",
+    "timestamp": "2025-05-19T12:42:58.396Z"
+  },
+  {
+    "id": "1374006301394473001",
+    "author": "nawadan1732",
+    "content": "<@1081554367494246460>",
+    "timestamp": "2025-05-19T12:50:30.055Z"
+  },
+  {
+    "id": "1374006356419285013",
+    "author": "nawadan1732",
+    "content": "この宣伝文で荒らされた鯖の人たちに送りつけよっかな",
+    "timestamp": "2025-05-19T12:50:43.174Z"
+  },
+  {
+    "id": "1374006371837808651",
+    "author": "nawadan1732",
+    "content": "<@1330438210504884225>",
+    "timestamp": "2025-05-19T12:50:46.850Z"
+  },
+  {
+    "id": "1375015219662688326",
+    "author": "miznobu",
+    "content": "ゆっくりーむさんに草餅鯖荒らされてるとの報告があったのですが\n荒らされたのですか？",
+    "timestamp": "2025-05-22T07:39:34.915Z"
+  },
+  {
+    "id": "1375015272045477969",
+    "author": "miznobu",
+    "content": "<@1373638029264293958>",
+    "timestamp": "2025-05-22T07:39:47.404Z"
+  },
+  {
+    "id": "1375015339737354260",
+    "author": "miznobu",
+    "content": "<@1330438210504884225>",
+    "timestamp": "2025-05-22T07:40:03.543Z"
+  },
+  {
+    "id": "1375015451133874246",
+    "author": "miznobu",
+    "content": "あメンション失礼します",
+    "timestamp": "2025-05-22T07:40:30.102Z"
+  },
+  {
+    "id": "1375017929376010322",
+    "author": "tetsuchi0096_15456",
+    "content": "ここですか？🤔",
+    "timestamp": "2025-05-22T07:50:20.961Z"
+  },
+  {
+    "id": "1375028176643686523",
+    "author": "miznobu",
+    "content": "わかんないです\nごめんなさい…",
+    "timestamp": "2025-05-22T08:31:04.100Z"
+  },
+  {
+    "id": "1375036336414785566",
+    "author": "hain_sspc",
+    "content": "雑談はここ",
+    "timestamp": "2025-05-22T09:03:29.541Z"
+  },
+  {
+    "id": "1375041531328725082",
+    "author": "diokusamotibanzai",
+    "content": "😱",
+    "timestamp": "2025-05-22T09:24:08.105Z"
+  },
+  {
+    "id": "1375041695972065390",
+    "author": "hain_sspc",
+    "content": "https://discord.gg/q8epMFfMQT",
+    "timestamp": "2025-05-22T09:24:47.359Z"
+  },
+  {
+    "id": "1375060706164211782",
+    "author": "tetsuchi0096_15456",
+    "content": "あなる",
+    "timestamp": "2025-05-22T10:40:19.742Z"
+  },
+  {
+    "id": "1375102362158370947",
+    "author": "nawadan1732",
+    "content": "@everyone",
+    "timestamp": "2025-05-22T13:25:51.305Z"
+  },
+  {
+    "id": "1375102377144877058",
+    "author": "nawadan1732",
+    "content": "",
+    "timestamp": "2025-05-22T13:25:54.878Z"
+  },
+  {
+    "id": "1375102438368874548",
+    "author": "nawadan1732",
+    "content": "もう100万いきそうワロス",
+    "timestamp": "2025-05-22T13:26:09.475Z"
+  },
+  {
+    "id": "1375372929902182400",
+    "author": "nawadan1732",
+    "content": "<@977774388768292964> <@1330438210504884225>",
+    "timestamp": "2025-05-23T07:20:59.682Z"
+  },
+  {
+    "id": "1375372942623375362",
+    "author": "nawadan1732",
+    "content": "詰みですはい",
+    "timestamp": "2025-05-23T07:21:02.715Z"
+  },
+  {
+    "id": "1375372977226514574",
+    "author": "nawadan1732",
+    "content": "glitchサービス終了予定だそうです泣",
+    "timestamp": "2025-05-23T07:21:10.965Z"
+  },
+  {
+    "id": "1375376179380355114",
+    "author": "tetsuchi0096_15456",
+    "content": "😭",
+    "timestamp": "2025-05-23T07:33:54.418Z"
+  },
+  {
+    "id": "1375398104026710036",
+    "author": "nawadan1732",
+    "content": "仮ですが乗り換え先サービス見つけたので",
+    "timestamp": "2025-05-23T09:01:01.661Z"
+  },
+  {
+    "id": "1375398124067098634",
+    "author": "nawadan1732",
+    "content": "今テスト中です",
+    "timestamp": "2025-05-23T09:01:06.439Z"
+  },
+  {
+    "id": "1376134318920826952",
+    "author": "automod#0000",
+    "content": "",
+    "timestamp": "2025-05-25T09:46:28.970Z"
+  },
+  {
+    "id": "1376134383148466218",
+    "author": "totsuka_saituyowwww",
+    "content": "",
+    "timestamp": "2025-05-25T09:46:44.283Z"
+  },
+  {
+    "id": "1376135061057044510",
+    "author": "automod#0000",
+    "content": "",
+    "timestamp": "2025-05-25T09:49:25.909Z"
+  }
+]

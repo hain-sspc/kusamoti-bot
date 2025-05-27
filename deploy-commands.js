@@ -11,7 +11,7 @@ for (const file of commandFiles) {
         // SlashCommandBuilderの場合は直接コマンドオブジェクトをpush
         commands.push(command.data);
     } else {
-        console.warn(`⚠ ${file} は有効なスラッシュコマンド形式ではありません`);
+        console.warn(`${file} は有効なスラッシュコマンド形式ではありません`);
     }
 }
 
@@ -23,13 +23,13 @@ const route = isGlobal
 
 (async () => {
     try {
-        console.log(`🔄 コマンドを ${isGlobal ? 'グローバル' : '開発サーバー'} に登録中...`);
-        console.log('📦 登録コマンド一覧:', commands.map(cmd => cmd.name).join(', '));
+        console.log(`コマンドを ${isGlobal ? 'グローバル' : '開発サーバー'} に登録中...`);
+        console.log('登録コマンド一覧:', commands.map(cmd => cmd.name).join(', '));
 
         await rest.put(route, { body: commands });
 
-        console.log('✅ コマンド登録完了！');
+        console.log('コマンド登録完了！');
     } catch (error) {
-        console.error('❌ 登録エラー:', error);
+        console.error('登録エラー:', error);
     }
 })();

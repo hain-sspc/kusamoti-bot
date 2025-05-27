@@ -18,7 +18,7 @@ module.exports = {
         const coinName = getCoinName(guildId);
         if (!coinName) {
             return interaction.reply({
-                content: '⚠️ このサーバーではまだコインが設定されていません。\n管理者に `/step_coins` を実行してもらってください。',
+                content: 'このサーバーではまだコインが設定されていません。\n管理者に `/step_coins` を実行してもらってください。',
                 ephemeral: true
             });
         }
@@ -30,7 +30,7 @@ module.exports = {
         if (lastUsed && now - lastUsed < COOLDOWN_TIME) {
             const remaining = ((COOLDOWN_TIME - (now - lastUsed)) / 1000 / 60).toFixed(1);
             return interaction.reply({
-                content: `⏳ お仕事はクールダウン中です。あと **${remaining} 分** 待ってください。`,
+                content: `お仕事はクールダウン中です。あと **${remaining} 分** 待ってください。`,
                 ephemeral: true
             });
         }
@@ -45,6 +45,6 @@ module.exports = {
 
         saveEconomy(eco);
 
-        await interaction.reply(`💼 お仕事完了！ ${amount} ${coinName} を獲得しました！`);
+        await interaction.reply(`お仕事完了！ ${amount} ${coinName} を獲得しました！`);
     }
 };
