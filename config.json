@@ -2,9 +2,5 @@
   "token": "Xxxx",
   "clientId": "1352207314349981737",
   "devGuildId": "1300434664347144262",
-  "ROLE_ID": "1372827557329899560",
-  "githubToken": "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",
-  "githubOwner": "hain_sspc",
-  "githubRepo": "SSPC",
-  "announcementPath": "data.json"
+  "ROLE_ID": "1372827557329899560"
 }
