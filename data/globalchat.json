@@ -1,18 +1,3 @@
 {
-  "1370365775172468837": {
-    "webhook_url": "https://discord.com/api/webhooks/1375975363603206258/JE33Xf36yK2TRneEbgkELjay4774EUFAzkc2JVryLU1twjO1JCNn_LJiXmaLDLMS8YHE",
-    "channel_id": "1375744326407294986"
-  },
-  "1300434664347144262": {
-    "webhook_url": "https://discord.com/api/webhooks/1375975236431908935/Kl9ne-elilaJOiCrUIVu_EUAwyLw9MzrR-yUZuKxpTBey4KiepzR3ua01FfTGO672b6e",
-    "channel_id": "1373076292756570152"
-  },
-  "1375826956968394883": {
-    "webhook_url": "https://discord.com/api/webhooks/1375827296514084985/34w8Xc5uiq55bzcMkn1Rim3TVfRaNid70ZGS1q8PLt3b2osE3AORu6-iToMitxsY70pG",
-    "channel_id": "1375826957715112030"
-  },
-  "1222927260877717677": {
-    "webhook_url": "https://discord.com/api/webhooks/1375997139515080744/aINTIHd7oEYmXgGe30c9i_Duj2lZW7fiiXUwpB6Jq4qvhuyTmRx28neyMa5wUA_kHtKg",
-    "channel_id": "1375997086172188713"
-  }
+
 }
