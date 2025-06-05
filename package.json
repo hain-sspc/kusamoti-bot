@@ -8,7 +8,6 @@
     "node-fetch": "^3.3.2",
     "play-dl": "^1.9.7",
     "sharp": "^0.34.2",
-    "youtube-dl-exec": "^3.0.21",
     "ytdl-core": "^4.11.5"
   },
   "devDependencies": {
