@@ -1,0 +1,24 @@
+{
+  "name": "SpartanX",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Adivise",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/rest": "^21.1.1",
+    "axios": "^1.9.0",
+    "chalk": "^4.1.0",
+    "chartjs-node-canvas": "^5.0.0",
+    "discord.js": "^14.14.1",
+    "encoding-japanese": "^2.2.0",
+    "moment": "^2.30.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.21.0"
+  }
+}

@@ -1,0 +1,335 @@
+{
+  "totalCoins": 70,
+  "transactions": [
+    {
+      "userId": "1330438210504884225",
+      "spent": 100000,
+      "timestamp": "2025-05-05T01:39:36.060Z"
+    },
+    {
+      "userId": "1330438210504884225",
+      "spent": 10000,
+      "timestamp": "2025-05-05T01:43:45.288Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1354248569695244380",
+      "amount": 800,
+      "price": 1,
+      "timestamp": "2025-05-05T01:59:43.845Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 10000,
+      "price": 1,
+      "timestamp": "2025-05-05T02:03:54.502Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 10000,
+      "price": 1,
+      "timestamp": "2025-05-05T02:05:27.383Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 1,
+      "price": 26160.800000000003,
+      "timestamp": "2025-05-05T03:24:38.851Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1330438210504884225",
+      "amount": 130001,
+      "price": 26161,
+      "timestamp": "2025-05-05T03:25:31.747Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 10000000,
+      "price": 160.8,
+      "timestamp": "2025-05-05T03:26:12.088Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 1,
+      "price": 161,
+      "timestamp": "2025-05-05T03:30:17.131Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1330438210504884225",
+      "amount": 2,
+      "price": 161.20000000000002,
+      "timestamp": "2025-05-05T03:35:18.948Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 100,
+      "price": 160.8,
+      "timestamp": "2025-05-05T03:35:56.184Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1354248569695244380",
+      "amount": 100,
+      "price": 180.8,
+      "timestamp": "2025-05-05T03:46:14.699Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1330438210504884225",
+      "amount": 10,
+      "price": 160.8,
+      "timestamp": "2025-05-05T06:17:55.341Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 100,
+      "price": 158.8,
+      "timestamp": "2025-05-05T06:18:26.735Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 10,
+      "price": 178.8,
+      "timestamp": "2025-05-05T21:33:00.478Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 1,
+      "price": 197.8,
+      "timestamp": "2025-05-05T22:18:22.506Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1354248569695244380",
+      "amount": 200,
+      "price": 235.8,
+      "timestamp": "2025-05-05T22:31:55.902Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1354248569695244380",
+      "amount": 200,
+      "price": 354.8,
+      "timestamp": "2025-05-05T22:43:30.759Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1330438210504884225",
+      "amount": 100,
+      "price": 354.8,
+      "timestamp": "2025-05-05T22:43:46.339Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1354248569695244380",
+      "amount": 100,
+      "price": 334.8,
+      "timestamp": "2025-05-05T22:44:06.012Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 1,
+      "price": 347.8,
+      "timestamp": "2025-05-05T22:47:33.132Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1330438210504884225",
+      "amount": 1,
+      "price": 355.8,
+      "timestamp": "2025-05-05T22:48:42.463Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1330438210504884225",
+      "amount": 1,
+      "price": 352.8,
+      "timestamp": "2025-05-05T22:53:19.066Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1330438210504884225",
+      "amount": 49,
+      "price": 352.8,
+      "timestamp": "2025-05-05T22:53:44.069Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 1,
+      "price": 355.8,
+      "timestamp": "2025-05-05T22:55:05.225Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 40,
+      "price": 364.8,
+      "timestamp": "2025-05-05T22:59:33.021Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 40,
+      "price": 364.8,
+      "timestamp": "2025-05-05T23:00:37.239Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 40,
+      "price": 373.8,
+      "timestamp": "2025-05-05T23:02:12.155Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 40,
+      "price": 374.8,
+      "timestamp": "2025-05-05T23:02:18.670Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1354248569695244380",
+      "amount": 50,
+      "price": 465.8,
+      "timestamp": "2025-05-06T06:17:05.177Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1330438210504884225",
+      "amount": 100,
+      "price": 464.8,
+      "timestamp": "2025-05-06T06:17:22.482Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1354248569695244380",
+      "amount": 50,
+      "price": 474.8,
+      "timestamp": "2025-05-06T06:17:47.635Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1354248569695244380",
+      "amount": 1,
+      "price": 501.8,
+      "timestamp": "2025-05-06T06:31:40.003Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1354248569695244380",
+      "amount": 9,
+      "price": 496.8,
+      "timestamp": "2025-05-06T06:31:53.373Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1354248569695244380",
+      "amount": 40,
+      "price": 515.8,
+      "timestamp": "2025-05-06T06:53:09.321Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1330438210504884225",
+      "amount": 112,
+      "price": 460.79999999999995,
+      "timestamp": "2025-05-06T12:27:13.774Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1369198754472661034",
+      "amount": 10,
+      "price": 428.79999999999995,
+      "timestamp": "2025-05-10T04:34:38.589Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 1,
+      "price": 452.79999999999995,
+      "timestamp": "2025-05-10T08:09:50.074Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1292062407132446751",
+      "amount": 2,
+      "price": 453.79999999999995,
+      "timestamp": "2025-05-10T08:12:17.751Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1292062407132446751",
+      "amount": 2,
+      "price": 452.79999999999995,
+      "timestamp": "2025-05-10T08:14:49.736Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1292062407132446751",
+      "amount": 2,
+      "price": 458.79999999999995,
+      "timestamp": "2025-05-10T08:15:54.164Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1292062407132446751",
+      "amount": 2,
+      "price": 453.79999999999995,
+      "timestamp": "2025-05-10T08:19:07.903Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 1,
+      "price": 597.8,
+      "timestamp": "2025-05-10T22:25:37.542Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 1,
+      "price": 510.79999999999995,
+      "timestamp": "2025-05-11T01:34:32.494Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 7,
+      "price": 498.79999999999995,
+      "timestamp": "2025-05-11T01:35:45.329Z"
+    },
+    {
+      "type": "buyCoin",
+      "userId": "1330438210504884225",
+      "amount": 1,
+      "price": 493.79999999999995,
+      "timestamp": "2025-05-11T02:22:49.939Z"
+    },
+    {
+      "type": "sellCoin",
+      "userId": "1330438210504884225",
+      "amount": 1,
+      "price": 484.79999999999995,
+      "timestamp": "2025-05-11T02:22:57.284Z"
+    }
+  ],
+  "baseCoinPrice": 436.79999999999995,
+  "totalStocks": 0,
+  "baseStockPrice": 847,
+  "totalSpent": 110000,
+  "curveConstant": 1000
+}
