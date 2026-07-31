@@ -2,25 +2,19 @@
 const fs = require('fs');
 const path = require('path');
 
-// =========================
-// パス
-// =========================
+
 const DATA_DIR = path.join(__dirname, '../data');
 const ECONOMY_PATH = path.join(DATA_DIR, 'economy.json');
 const COIN_CONFIG_PATH = path.join(DATA_DIR, 'coin_config.json');
 
-// =========================
-// 初期データ
-// =========================
+
 const DEFAULT_ECONOMY = {
     users: {}
 };
 
 const DEFAULT_COIN_CONFIG = {};
 
-// =========================
-// 共通
-// =========================
+
 function ensureDataFolder() {
     if (!fs.existsSync(DATA_DIR)) {
         fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -64,9 +58,7 @@ function saveJson(filePath, data) {
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 }
 
-// =========================
-// economy
-// =========================
+
 function loadEconomy() {
     return loadJson(ECONOMY_PATH, DEFAULT_ECONOMY);
 }
@@ -75,9 +67,7 @@ function saveEconomy(economy) {
     saveJson(ECONOMY_PATH, economy);
 }
 
-// =========================
-// coin config
-// =========================
+
 function loadCoinConfig() {
     return loadJson(COIN_CONFIG_PATH, DEFAULT_COIN_CONFIG);
 }
@@ -86,9 +76,7 @@ function saveCoinConfig(config) {
     saveJson(COIN_CONFIG_PATH, config);
 }
 
-// =========================
-// ユーザー取得
-// =========================
+
 function getUser(economy, userId) {
     userId = String(userId);
 
@@ -131,9 +119,7 @@ function setDefaultCoin(
         String(coinId).toUpperCase();
 }
 
-// =========================
-// コイン取得
-// =========================
+
 function getCoin(coinId) {
     const config = loadCoinConfig();
     return config[coinId] || null;
@@ -146,9 +132,7 @@ function getAllCoins() {
     return loadCoinConfig();
 }
 
-// =========================
-// コイン作成
-// =========================
+
 function createCoin({
     coinId,
     name,
@@ -183,9 +167,7 @@ function createCoin({
     };
 }
 
-// =========================
-// 残高取得
-// =========================
+
 function getBalance(economy, userId, coinId) {
     const user = getUser(economy, userId);
 
@@ -194,9 +176,7 @@ function getBalance(economy, userId, coinId) {
     return user.wallet[coinId] || 0;
 }
 
-// =========================
-// 残高追加
-// =========================
+
 function addBalance(economy, userId, coinId, amount) {
     const user = getUser(economy, userId);
 
@@ -221,9 +201,7 @@ function addBalance(economy, userId, coinId, amount) {
     return user.wallet[coinId];
 }
 
-// =========================
-// 送金
-// =========================
+
 function transfer(economy, fromUserId, toUserId, coinId, amount) {
     amount = Number(amount);
 
@@ -252,14 +230,7 @@ function transfer(economy, fromUserId, toUserId, coinId, amount) {
     };
 }
 
-// =========================
-// 発行量変更
-// =========================
 
-
-// =========================
-// 全ウォレット取得
-// =========================
 function getWallet(economy, userId) {
     const user = getUser(economy, userId);
     return user.wallet;
@@ -279,9 +250,6 @@ function workrole(guildId) {
 }
 
 
-// =========================
-// exports
-// =========================
 module.exports = {
     loadEconomy,
     saveEconomy,

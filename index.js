@@ -19,7 +19,6 @@ const client = new Client({
 
 client.commands = new Collection();
 
-/* ---------------- コマンド読み込み ---------------- */
 
 const commandsPath = path.join(__dirname, './commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -28,7 +27,7 @@ for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
 
     if (!command?.data?.name) {
-        console.warn(`⚠️ ${file} は正しい形式ではありません。スキップします。`);
+        console.warn(` ${file} は正しい形式ではありません。スキップします。`);
         continue;
     }
 
@@ -57,7 +56,7 @@ for (const file of eventFiles) {
     }
 }
 
-//呼び出し
+
 const { antinuke } = require('./antinuke');
 antinuke(client);
 
