@@ -2,4 +2,4 @@ node_modules/
 .env
 config.json
 commands_archive/
-.gitignore
+deploy-commands.js
