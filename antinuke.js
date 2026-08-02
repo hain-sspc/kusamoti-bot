@@ -1,6 +1,6 @@
 ﻿const { AuditLogEvent } = require("discord.js");
 const fs = require("fs");
-const config = JSON.parse(fs.readFileSync("./config.json", "utf8"));
+const config = JSON.parse(fs.readFileSync("./data/config.json", "utf8"));
 
 const LIMIT = config.antinuke.limit;
 const TIME = config.antinuke.time;

@@ -3,4 +3,3 @@ node_modules/
 config.json
 commands_archive/
 data/
-deploy-commands.js
