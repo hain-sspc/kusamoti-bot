@@ -66,9 +66,7 @@ async function punish(guild, executor, reason, count) {
 
 async function antinuke(client) {
 
-    // ===============================
-    // AntiNuke: チャンネル削除
-    // ===============================
+
     client.on("channelDelete", async (channel) => {
         try {
             const logs = await channel.guild.fetchAuditLogs({
@@ -97,9 +95,7 @@ async function antinuke(client) {
     });
 
 
-    // ===============================
-    // AntiNuke: BAN
-    // ===============================
+ 
     client.on("guildBanAdd", async (ban) => {
 
         console.log("BANイベント発火", ban.user.id);
