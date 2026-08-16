@@ -1,4 +1,5 @@
 ﻿const { Events, ActivityType } = require('discord.js');
+const invitesCache = require("../data/invitesCache");
 
 
 module.exports = {
@@ -29,6 +30,28 @@ module.exports = {
             });
 
             console.log(`ステータスを更新しました: ${statusText}`);
+
+            for (const guild of client.guilds.cache.values()) {
+                try {
+                    const invites = await guild.invites.fetch();
+
+                    const inviteMap = new Map();
+
+                    for (const invite of invites.values()) {
+                        inviteMap.set(invite.code, {
+                            uses: invite.uses ?? 0
+                        });
+                    }
+
+                    invitesCache.set(guild.id, inviteMap);
+
+                } catch (error) {
+                    console.error(
+                        `招待情報取得失敗: ${guild.name}`,
+                        error
+                    );
+                }
+            }
         } catch (error) {
             console.log(error);
 
