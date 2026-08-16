@@ -3,8 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const config = require('./data/config.json');
 
-const { messageLogger } = require('./messageLogger');
-
 
 const client = new Client({
     intents: [
@@ -61,13 +59,7 @@ for (const file of eventFiles) {
 
 const { antinuke } = require('./antinuke');
 antinuke(client);
+ 
 
 client.login(config.token);
-
-
-
-
-messageLogger(client)
-
-
 

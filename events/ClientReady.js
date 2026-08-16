@@ -1,6 +1,6 @@
 ﻿const { Events, ActivityType } = require('discord.js');
 const invitesCache = require("../data/invitesCache");
-
+const {flushMinuteData} = require("../messageLogger");
 
 module.exports = {
     name: Events.ClientReady,
@@ -52,6 +52,9 @@ module.exports = {
                     );
                 }
             }
+
+            flushMinuteData(client);
+                    setInterval(() => flushMinuteData(client), 60 * 1000);
         } catch (error) {
             console.log(error);
 

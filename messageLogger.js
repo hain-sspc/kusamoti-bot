@@ -1,6 +1,7 @@
 ﻿const fs = require('fs');
 const path = require('path');
 const { EmbedBuilder } = require('discord.js');
+const log = require("./data/serverlog.json");
 
 const BASE_PATH = path.join(__dirname, 'data/messagecount');
 
@@ -45,7 +46,6 @@ function saveGuildData(guildId, data) {
 
 // ===== 1分バッファ =====
 const minuteBuffer = {};
-let firstRun = true;
 
 // ===== ログ出力関数 =====
 function logMessage(...args) {
@@ -103,11 +103,7 @@ async function flushMinuteData(client) {
             const activeShortTop = guild.roles.cache.get(roles.ACTIVE_SHORT_TOP_ID);
             const newrole = guild.roles.cache.get(roles.NEWROLE_ID);
 
-            const rank1 = guild.roles.cache.get(roles.RANK1_ID);
-            const rank2 = guild.roles.cache.get(roles.RANK2_ID);
-            const rank3 = guild.roles.cache.get(roles.RANK3_ID);
-            const rank4 = guild.roles.cache.get(roles.RANK4_ID);
-            const rank5 = guild.roles.cache.get(roles.RANK5_ID);
+
 
 
             logMessage("==== NEWROLE CHECK ====");
@@ -123,46 +119,6 @@ async function flushMinuteData(client) {
             const topUserId = (longTopUser && shortTopUser && longTopUser === shortTopUser) ? longTopUser : null;
 
             let roleChanged = false;
-
-
-            // ===== 級ランク =====
-            if (rank1 && rank2 && rank3 && rank4 && rank5) {
-                const rankRoles = [
-                    { role: rank5, min: 100 },
-                    { role: rank4, min: 300 },
-                    { role: rank3, min: 500 },
-                    { role: rank2, min: 2000 },
-                    { role: rank1, min: 4000 },
-                ];
-
-                for (const [userId, count] of Object.entries(longTotals)) {
-                    const member = await guild.members.fetch(userId).catch(() => null);
-                    if (!member) continue;
-
-                    // 一番高いランクを判定
-                    let targetRole = null;
-                    for (let i = rankRoles.length - 1; i >= 0; i--) {
-                        if (count >= rankRoles[i].min) {
-                            targetRole = rankRoles[i].role;
-                            break;
-                        }
-                    }
-
-                    for (const { role } of rankRoles) {
-                        if (role.id === targetRole?.id) {
-                            if (!member.roles.cache.has(role.id)) {
-                                await member.roles.add(role).catch(() => { });
-                                console.log("階級付与")
-                            }
-                        } else {
-                            if (member.roles.cache.has(role.id)) {
-                                await member.roles.remove(role).catch(() => { });
-                                console.log("階級削除")
-                            }
-                        }
-                    }
-                }
-            }
 
 
             // ===== 雑談王 =====
@@ -304,12 +260,11 @@ async function flushMinuteData(client) {
             }
 
             // ===== アクティブメンバーEmbed送信 =====
-            if (firstRun || roleChanged) {
-                firstRun = false;
+            if (roleChanged === true) {
+              
 
-                const TARGET_GUILD_ID = '1529465206709813399';
-                if (guild.id !== TARGET_GUILD_ID) continue;
-
+                const LOG_CHANNEL_ID = log[guild.id]?.messagelog;
+                if (!LOG_CHANNEL_ID) continue;
                 const totalShortCount = Object.values(shortTotals).reduce((a, b) => a + b, 0);
                 const totalLongCount = Object.values(longTotals).reduce((a, b) => a + b, 0);
 
@@ -371,7 +326,7 @@ async function flushMinuteData(client) {
                     });
                 }
 
-                const logChannel = await guild.channels.fetch('1533455619703701636').catch(() => null);
+                const logChannel = await guild.channels.fetch(LOG_CHANNEL_ID).catch(() => null);
                 if (logChannel?.isTextBased()) {
                     await logChannel.send({ embeds: [embed] }).catch(err => logError("Embed送信失敗:", err.message));
                     logMessage("アクティブメンバーEmbed送信完了");
@@ -387,33 +342,11 @@ async function flushMinuteData(client) {
     logMessage("===== message flush終了 =====\n");
 }
 
-function messageLogger(client) {
 
-    client.once('ready', () => {
-        flushMinuteData(client);
-        setInterval(() => flushMinuteData(client), 60 * 1000);
-    });
-
-    client.on('messageCreate', message => {
-
-        if (message.author.bot || !message.guild) return;
-
-        const guildId = message.guild.id;
-        const userId = message.author.id;
-
-        minuteBuffer[guildId] ??= { total: 0, users: {} };
-        minuteBuffer[guildId].users[userId] =
-            (minuteBuffer[guildId].users[userId] || 0) + 1;
-
-        minuteBuffer[guildId].total++;
-    });
-// ===== メイン =====
-
-};
 
 module.exports = {
-    messageLogger,
+    flushMinuteData,
+    minuteBuffer,
     loadGuildData,
     saveGuildData
-
 }
