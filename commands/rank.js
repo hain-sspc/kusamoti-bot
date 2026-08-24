@@ -5,7 +5,6 @@ const{ loadGuildData} = require("../messageLogger");
 //const DATA_PATH = path.join(__dirname, "../data/messagecount");
 
 module.exports = {
-     devOnly: true,
     data: new SlashCommandBuilder()
         .setName("rank")
         .setDescription("雑談王"),
