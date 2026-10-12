@@ -15,6 +15,7 @@ module.exports = {
                     { name: '1時間', value: 'sshort' },
                     { name: '24時間', value: 'short' },
                     { name: '72時間', value: 'long' },
+                    { name: '1か月', value: 'month' },
                     { name: '全て', value: 'all' }
                 )
         ),
@@ -26,6 +27,7 @@ module.exports = {
             sshort: { hours: 1, label: "1時間" },
             short: { hours: 24, label: "24時間" },
             long: { hours: 72, label: "72時間" },
+            month: { hours: 720, label: "1か月" },
             all: { hours: null, label: "全期間" }
         };
 

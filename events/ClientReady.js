@@ -1,6 +1,7 @@
 ﻿const { Events, ActivityType } = require('discord.js');
 const invitesCache = require("../data/invitesCache");
 const {flushMinuteData} = require("../messageLogger");
+const ai = require('../systems/ai');
 
 module.exports = {
     name: Events.ClientReady,
@@ -31,6 +32,10 @@ module.exports = {
 
             console.log(`ステータスを更新しました: ${statusText}`);
 
+                await ai.train();
+                console.log("AI ready");
+
+
             for (const guild of client.guilds.cache.values()) {
                 try {
                     const invites = await guild.invites.fetch();
@@ -47,8 +52,7 @@ module.exports = {
 
                 } catch (error) {
                     console.error(
-                        `招待情報取得失敗: ${guild.name}`,
-                        error
+                        `招待情報取得失敗: ${guild.name}`
                     );
                 }
             }

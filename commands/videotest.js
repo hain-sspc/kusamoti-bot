@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, AttachmentBuilder } = require("discord.js");
-const path = require("path");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -10,11 +9,25 @@ module.exports = {
         await interaction.deferReply();
 
         try {
-            // 後で実際の動画生成処理をここから呼び出す
-            const { Ranking} = require("../systems/Ranking");
+            const { createRankingVideo} = require("../systems/videoranking");
+            let lastProgress = -1;
 
-            const outputPath = await Ranking({
-                guildId: interaction.guild.id
+            const outputPath = await createRankingVideo({
+                 guildId: interaction.guild.id,
+                 guild: interaction.guild,
+                 client: interaction.client,
+                 onProgress: async (completedFrames, totalFrames) => {
+                     const progress = Math.floor(
+                         (completedFrames / totalFrames) * 100
+                     );
+
+                     if (progress >= 100 || progress >= lastProgress + 5) {
+                         lastProgress = progress;
+                         await interaction.editReply(
+                             `動画生成中... ${progress}%`
+                         );
+                     }
+                 }
             });
 
             const attachment = new AttachmentBuilder(outputPath);

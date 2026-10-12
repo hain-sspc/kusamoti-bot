@@ -63,3 +63,6 @@ antinuke(client);
 
 client.login(config.token);
 
+
+const ai = require('./systems/ai');
+

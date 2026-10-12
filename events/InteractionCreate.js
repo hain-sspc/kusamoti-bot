@@ -32,10 +32,18 @@ module.exports = {
             }
         } catch (error) {
             console.error(error);
-            if (!interaction.replied) {
-                await interaction.reply({ content: 'エラー', ephemeral: true });
+            if (interaction.deferred || interaction.replied) {
+                await interaction.editReply({
+                    content: 'エラー',
+                    components: [],
+                    embeds: []
+                }).catch(replyError => {
+                    console.error('Interactionへのエラー返信に失敗しました:', replyError);
+                });
             } else {
-                await interaction.editReply({ content: 'エラー', ephemeral: true });
+                await interaction.reply({ content: 'エラー', ephemeral: true }).catch(replyError => {
+                    console.error('Interactionへのエラー返信に失敗しました:', replyError);
+                });
             }
         }
     }
