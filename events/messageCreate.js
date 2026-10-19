@@ -5,6 +5,8 @@ const { minuteBuffer } = require('../messageLogger');
 const ai = require('../systems/ai');
 const AI_CHANNEL_ID = require("../data/config.json").AI_CHANNEL_ID;
 const webhookClients = new Map();
+const processedMessageIds = new Set();
+const MAX_PROCESSED_MESSAGE_IDS = 10000;
 
 function getWebhookUrl(channelData) {
     return channelData?.webhook_url ||
@@ -106,6 +108,12 @@ module.exports = {
     async execute(message, client) {
 
         if (message.author.bot) return;
+        if (processedMessageIds.has(message.id)) return;
+
+        processedMessageIds.add(message.id);
+        if (processedMessageIds.size > MAX_PROCESSED_MESSAGE_IDS) {
+            processedMessageIds.delete(processedMessageIds.values().next().value);
+        }
 
         void get_message().catch(console.error);
         messege_count_loger();

@@ -10,6 +10,15 @@ module.exports = {
             process.title = `[kusamoti bot]`
             console.log(`ログイン成功: ${client.user.tag}`);
 
+            void flushMinuteData(client).catch(error => {
+                console.error("初回メッセージ集計の保存に失敗しました:", error);
+            });
+            setInterval(() => {
+                void flushMinuteData(client).catch(error => {
+                    console.error("メッセージ集計の保存に失敗しました:", error);
+                });
+            }, 60 * 1000);
+
           
             // サーバー数
             const guildCount = client.guilds.cache.size;
@@ -57,8 +66,6 @@ module.exports = {
                 }
             }
 
-            flushMinuteData(client);
-                    setInterval(() => flushMinuteData(client), 60 * 1000);
         } catch (error) {
             console.log(error);
 

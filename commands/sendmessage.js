@@ -17,8 +17,8 @@ module.exports = {
                 .setDescription('すべてのサーバーに送信（true にすると channel_id は無視）')),
 
     async execute(interaction) {
-        const targetGuildId = '1430524783237529603'; // 草餅鯖
-        const logChannelId = '1493959503077445776'; // ログ用チャンネルID
+        const targetGuildId = '1529465206709813399'; // 草餅鯖
+        const logChannelId = '1532218888975159418'; // ログ用チャンネルID
 
         // ログチャンネル取得（★修正点）
         const logChannel = await interaction.client.channels

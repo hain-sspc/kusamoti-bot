@@ -458,6 +458,11 @@ async function flushMinuteData(client) {
         "===== message flush開始 ====="
     );
 
+    const pendingEntries = Object.entries(minuteBuffer);
+    for (const [guildId] of pendingEntries) {
+        delete minuteBuffer[guildId];
+    }
+
     const now = Date.now();
 
     const minuteKey =
@@ -470,7 +475,8 @@ async function flushMinuteData(client) {
         minuteKey
     );
 
-    for (const guildId of Object.keys(minuteBuffer)) {
+    for (const [guildId, pendingData] of pendingEntries) {
+        let dataSaved = false;
         try {
             // ------------------------------------------------
             // データ保存
@@ -479,13 +485,23 @@ async function flushMinuteData(client) {
             const guildData =
                 loadGuildData(guildId);
 
-            guildData.logs[minuteKey] =
-                minuteBuffer[guildId];
+            const minuteData = guildData.logs[minuteKey] || {
+                total: 0,
+                users: {}
+            };
+            minuteData.total += pendingData.total || 0;
+
+            for (const [userId, count] of Object.entries(pendingData.users || {})) {
+                minuteData.users[userId] = (minuteData.users[userId] || 0) + count;
+            }
+
+            guildData.logs[minuteKey] = minuteData;
 
             saveGuildData(
                 guildId,
                 guildData
             );
+            dataSaved = true;
 
 
             // ------------------------------------------------
@@ -627,6 +643,19 @@ async function flushMinuteData(client) {
             }
 
         } catch (err) {
+            if (!dataSaved) {
+                const retryData = minuteBuffer[guildId] ??= {
+                    total: 0,
+                    users: {}
+                };
+                retryData.total += pendingData.total || 0;
+                retryData.users ??= {};
+
+                for (const [userId, count] of Object.entries(pendingData.users || {})) {
+                    retryData.users[userId] = (retryData.users[userId] || 0) + count;
+                }
+            }
+
             logError(
                 "ランキング処理失敗:",
                 guildId,
@@ -635,14 +664,6 @@ async function flushMinuteData(client) {
         }
     }
 
-
-    // ------------------------------------------------
-    // バッファ削除
-    // ------------------------------------------------
-
-    for (const key in minuteBuffer) {
-        delete minuteBuffer[key];
-    }
 
     logMessage(
         "===== message flush終了 =====\n"

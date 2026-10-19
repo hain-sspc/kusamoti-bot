@@ -2,37 +2,78 @@
     const fs = require("fs");
     const kuromoji = require("kuromoji");
     const path = require("path");
+    const tokenLanguageModel = require("./tokenLanguageModel");
 
     const FILE = path.join(__dirname, "..", "data", "txt.json");
 
     let tokenizer = null;
     let tokenizerReady = false;
+    let dbCache = null;
+    let dbSaveTimer = null;
+    let dbSaveInProgress = false;
+    let dbDirty = false;
+    let dbRevision = 0;
 
 
     // =========================
     // DB
     // =========================
     function loadDB() {
-        if (!fs.existsSync(FILE)) {
-            return { sentences: [], bigram: {} };
-        }
+        if (dbCache) return dbCache;
 
-        const raw = fs.readFileSync(FILE, "utf8") || "{}";
-        const data = JSON.parse(raw);
+        const data = fs.existsSync(FILE)
+            ? JSON.parse(fs.readFileSync(FILE, "utf8") || "{}")
+            : {};
 
-        return {
+        dbCache = {
+            ...data,
             sentences: data.sentences || [],
             bigram: data.bigram || {},
             pairs: data.pairs || {},
             emotion: data.emotion || {},
             userMemory: data.userMemory || {},
             posBigram: data.posBigram || {},
-            intent: data.intent || {} // 🔥追加
+            intent: data.intent || {}
         };
+        return dbCache;
     }
 
     function saveDB(data) {
-        fs.writeFileSync(FILE, JSON.stringify(data, null, 2));
+        dbCache = data;
+        dbDirty = true;
+        dbRevision++;
+        if (!dbSaveTimer && !dbSaveInProgress) {
+            dbSaveTimer = setTimeout(flushDB, 1000);
+        }
+    }
+
+    async function flushDB() {
+        dbSaveTimer = null;
+        if (dbSaveInProgress || !dbDirty) return;
+
+        dbSaveInProgress = true;
+        const revision = dbRevision;
+        const temporaryFile = `${FILE}.${process.pid}.tmp`;
+
+        try {
+            await fs.promises.writeFile(temporaryFile, JSON.stringify(dbCache, null, 2));
+            await fs.promises.rename(temporaryFile, FILE);
+            if (revision === dbRevision) dbDirty = false;
+        } catch (error) {
+            console.error("AIデータベースの保存に失敗しました:", error);
+            try {
+                await fs.promises.unlink(temporaryFile);
+            } catch (cleanupError) {
+                if (cleanupError.code !== "ENOENT") {
+                    console.error("AIデータベース一時ファイルの削除に失敗しました:", cleanupError);
+                }
+            }
+        } finally {
+            dbSaveInProgress = false;
+            if (dbDirty && !dbSaveTimer) {
+                dbSaveTimer = setTimeout(flushDB, 1000);
+            }
+        }
     }
 
     function updatePosBigram(db, tokens) {
@@ -64,39 +105,157 @@
                     tokenizer = tk;
                     tokenizerReady = true;
                     console.log("kuromoji ready");
-                    resolve();
+
+                    try {
+                        const db = loadDB();
+                        const examples = db.sentences
+                            .filter(sentence => Array.isArray(sentence.tokens))
+                            .map(sentence => ({
+                                kind: "message",
+                                tokens: sentence.tokens.map(token => token.base)
+                            }));
+
+                        for (const [input, replies] of Object.entries(db.pairs || {})) {
+                            if (!Array.isArray(replies)) continue;
+
+                            for (const reply of replies) {
+                                examples.push({
+                                    kind: "conversation",
+                                    tokens: parseText(input).map(token => token.base),
+                                    replyTokens: parseText(reply).map(token => token.base)
+                                });
+                            }
+                        }
+
+                        tokenLanguageModel.addTrainingExamples(examples);
+                        tokenLanguageModel.train().then(() => {
+                            const status = tokenLanguageModel.getStatus();
+                            console.log(
+                                `AI token model ready: ${status.sequences} sequences, ` +
+                                `${status.vocabularySize} tokens`
+                            );
+                            resolve();
+                        }, reject);
+                    } catch (error) {
+                        reject(error);
+                    }
                 });
         });
     }
 
 
 
-    function findBestReply(input, db) {
+    function findBestReply(inputTokens, db) {
         if (!db.pairs) return null;
 
-        let best = null;
+        const inputWords = new Set(inputTokens.map(token => token.base).filter(Boolean));
+        if (inputWords.size === 0) return null;
+
         let bestScore = 0;
+        let bestMatches = [];
 
-        for (const key of Object.keys(db.pairs)) {
+        for (const [key, replies] of Object.entries(db.pairs)) {
+            if (!Array.isArray(replies)) continue;
 
-            let score = 0;
+            const keyWords = new Set(parseText(key).map(token => token.base).filter(Boolean));
+            if (keyWords.size === 0) continue;
 
-            const inputWords = input.split(" ");
-            const keyWords = key.split(" ");
-
-            for (const w of inputWords) {
-                if (keyWords.includes(w)) score++;
+            let overlap = 0;
+            for (const word of inputWords) {
+                if (keyWords.has(word)) overlap++;
             }
 
+            const score = overlap / (inputWords.size + keyWords.size - overlap);
             if (score > bestScore) {
                 bestScore = score;
-
-                const replies = db.pairs[key];
-                best = replies[Math.floor(Math.random() * replies.length)];
+                bestMatches = [replies];
+            } else if (score > 0 && score === bestScore) {
+                bestMatches.push(replies);
             }
         }
 
-        return bestScore > 0 ? best : null;
+        const replies = bestMatches.flat().filter(reply =>
+            typeof reply === "string" && reply.trim().length > 0
+        );
+        return replies.length > 0
+            ? replies[Math.floor(Math.random() * replies.length)]
+            : null;
+    }
+
+    function analyzeText(input) {
+        if (!isReady()) {
+            throw new Error("AI tokenizer is not ready");
+        }
+
+        const db = loadDB();
+        const tokens = parseText(input);
+        const inputWords = new Set(tokens.map(token => token.base).filter(Boolean));
+        const wordCounts = new Map();
+
+        for (const sentence of db.sentences) {
+            if (!Array.isArray(sentence.tokens)) continue;
+            for (const token of sentence.tokens) {
+                if (token?.base) {
+                    wordCounts.set(token.base, (wordCounts.get(token.base) || 0) + 1);
+                }
+            }
+        }
+
+        const pairs = Object.entries(db.pairs)
+            .filter(([, replies]) => Array.isArray(replies))
+            .map(([text, replies]) => {
+                const pairWords = new Set(parseText(text).map(token => token.base).filter(Boolean));
+                let overlap = 0;
+                for (const word of inputWords) {
+                    if (pairWords.has(word)) overlap++;
+                }
+
+                return {
+                    input: text,
+                    replies,
+                    score: inputWords.size && pairWords.size
+                        ? overlap / (inputWords.size + pairWords.size - overlap)
+                        : 0
+                };
+            })
+            .filter(pair => pair.score > 0)
+            .sort((left, right) => right.score - left.score)
+            .slice(0, 5);
+
+        const tokenStats = tokens.map(token => {
+            const emotion = db.emotion[token.base];
+            return {
+                ...token,
+                frequency: wordCounts.get(token.base) || 0,
+                emotion: emotion && emotion.count > 0
+                    ? emotion.score / emotion.count
+                    : null,
+                emotionCount: emotion?.count || 0
+            };
+        });
+
+        const transitions = tokens.slice(0, -1).map((token, index) => {
+            const next = tokens[index + 1];
+            return {
+                from: token.base,
+                to: next.base,
+                count: db.bigram[token.base]?.[next.base] || 0,
+                posFrom: token.pos,
+                posTo: next.pos,
+                posCount: db.posBigram[token.pos]?.[next.pos] || 0
+            };
+        });
+
+        return {
+            text: input,
+            tokens: tokenStats,
+            sentenceCount: db.sentences.length,
+            exactSentenceCount: db.sentences.filter(sentence => sentence.text === input).length,
+            conversationPairCount: Object.values(db.pairs)
+                .reduce((total, replies) => total + (Array.isArray(replies) ? replies.length : 0), 0),
+            transitions,
+            similarPairs: pairs
+        };
     }
 
 
@@ -169,29 +328,9 @@
     }
 
 
-    function learnIntent(db, tokens, intent) {
-
-        if (!db.intent[intent]) {
-            db.intent[intent] = {};
-        }
-
-        for (const t of tokens) {
-            const w = t.base;
-
-            if (!db.intent[intent][w]) {
-                db.intent[intent][w] = 0;
-            }
-
-            db.intent[intent][w] += 1; // 重み加算
-        }
-    }
     // =========================
     // 学習
     // =========================
-    let lastUserMessage = null; // 🔥 追加（ファイルの上に置く）
-
-
-
     function learn(input, userId = "global") {
         if (!isReady()) return console.log("not ready");
 
@@ -200,12 +339,6 @@
 
         if (tokens.length < 2) return;
 
-        const text = tokens.map(t => t.base).join("");
-        const intent = classify(text);
-
-        if (intent !== "other") {
-            learnIntent(db, tokens, intent);
-        }
         updateUserMemory(db, userId, tokens);
 
 
@@ -221,23 +354,11 @@
 
         if (!db.pairs) db.pairs = {};
 
-        if (lastUserMessage) {
-            if (!db.pairs[lastUserMessage]) {
-                db.pairs[lastUserMessage] = [];
-            }
-            db.pairs[lastUserMessage].push(input);
-        }
-
         // =========================
         // 🔥 感情スコア（伝染型）
         // =========================
 
-        let emotionScore = detectEmotionFromDB(db, tokens);
-
-        // 初期ブースト（完全ゼロ防止）
-        if (Math.abs(emotionScore) < 0.05) {
-            emotionScore = (Math.random() - 0.5) * 0.2;
-        }
+        const emotionScore = detectEmotionFromDB(db, tokens);
 
         if (!db.emotion) db.emotion = {};
 
@@ -300,11 +421,11 @@
             }
         }
 
-        console.log("emotionDB:");
-
-        lastUserMessage = input;
-
         saveDB(db);
+        tokenLanguageModel.addTrainingExamples([{
+            kind: "message",
+            tokens: tokens.map(token => token.base)
+        }]);
     }
 
 
@@ -368,36 +489,6 @@
         return mem.flat(); // 全単語まとめる
     }
 
-    function classify(text) {
-        if (text.includes("おはよう")) return "morning";
-        if (text.includes("こんにちは")) return "noon";
-        if (text.includes("こんばんは")) return "night";
-
-        if (text.includes("眠い")) return "sleepy";
-        if (text.includes("暑い")) return "hot";
-        if (text.includes("疲れた")) return "tired";
-
-        return "other";
-    }
-
-    function controlReply(type) {
-
-        const map = {
-            morning: ["おはよ", "おはよう"],
-            noon: ["こんにちは"],
-            night: ["こんばんは"],
-
-            sleepy: ["寝た方がいい", "無理するな"],
-            hot: ["水分とって休憩しよう"],
-            tired: ["無理せず休もう"]
-        };
-
-        if (!map[type]) return null;
-
-        const arr = map[type];
-        return arr[Math.floor(Math.random() * arr.length)];
-    }
-
     function isBad(text) {
         if (!text) return true;
         if (text.length < 3) return true;
@@ -405,35 +496,20 @@
         return false;
     }
 
-    function classifyNN(db, tokens) {
+    function hasLearnedWordTransitions(text, db) {
+        const tokens = parseText(text);
+        if (tokens.length < 3) return true;
 
-        const scores = {};
-
-        for (const intent of Object.keys(db.intent || {})) {
-
-            scores[intent] = 0;
-
-            for (const t of tokens) {
-                const w = t.base;
-
-                if (db.intent[intent][w]) {
-                    scores[intent] += db.intent[intent][w];
-                }
+        let learnedTransitions = 0;
+        for (let i = 0; i < tokens.length - 1; i++) {
+            if (db.bigram[tokens[i].base]?.[tokens[i + 1].base] > 0) {
+                learnedTransitions++;
             }
         }
 
-        let best = "other";
-        let max = 0;
-
-        for (const k of Object.keys(scores)) {
-            if (scores[k] > max) {
-                max = scores[k];
-                best = k;
-            }
-        }
-
-        return best;
+        return learnedTransitions / (tokens.length - 1) >= 0.25;
     }
+
     // =========================
     // 生成（重み付きマルコフ）
     // =========================
@@ -531,27 +607,22 @@
 
         if (tokens.length === 0) return "なるほどね";
 
-        const text = tokens.map(t => t.base).join("");
-
         // =========================
-        // 🔥 ① 意図分類
+        // 🔥 ① ペア応答
         // =========================
-        const type = classifyNN(db, tokens);
-
-        // =========================
-        // 🔥 ② 制御（最優先）
-        // =========================
-        const control = controlReply(type, text);
-        if (control) return control;
-
-        // =========================
-        // 🔥 ③ ペア応答
-        // =========================
-        const reply = findBestReply(clean, db);
+        const reply = findBestReply(tokens, db);
         if (reply && Math.random() < 0.3) return reply;
 
+        const tokenReply = tokenLanguageModel.generateReply(tokens.map(token => token.base));
+        if (tokenReply.length > 0) {
+            const neuralReply = fixSentence(tokenReply.join(""));
+            if (!isBad(neuralReply) && hasLearnedWordTransitions(neuralReply, db)) {
+                return neuralReply;
+            }
+        }
+
         // =========================
-        // 🔥 ④ 生成（最後）
+        // 🔥 ② 生成（最後）
         // =========================
         let emotion = detectEmotionFromDB(db, tokens);
 
@@ -567,10 +638,7 @@
 
         let gen = generate(start, [...context, ...userContext], emotion);
 
-        // =========================
-        // 🔥 ⑤ フィルター
-        // =========================
-        if (isBad(gen)) return "なるほどね";
+        if (isBad(gen) || !hasLearnedWordTransitions(gen, db)) return "なるほどね";
 
         return gen;
     }
@@ -589,7 +657,7 @@
     }
 
 
-    function learnPair(userText, botText) {
+    async function learnPair(userText, botText) {
         const db = loadDB();
 
         const u = parseText(userText);
@@ -597,15 +665,40 @@
 
         if (u.length === 0 || b.length === 0) return;
 
-        const u0 = u[0].base;
-        const b0 = b[0].base;
+        const previousReplies = Array.isArray(db.pairs[userText])
+            ? db.pairs[userText]
+            : [];
+        const firstInputToken = u[0].base;
+        for (const previousReply of previousReplies) {
+            const previousReplyTokens = parseText(previousReply);
+            if (previousReplyTokens.length === 0) continue;
 
-        if (!db.bigram[u0]) db.bigram[u0] = {};
-        if (!db.bigram[u0][b0]) db.bigram[u0][b0] = 0;
+            const firstReplyToken = previousReplyTokens[0].base;
+            const previousCount = db.bigram[firstInputToken]?.[firstReplyToken] || 0;
+            if (previousCount >= 5) {
+                const remainingCount = previousCount - 5;
+                if (remainingCount > 0) {
+                    db.bigram[firstInputToken][firstReplyToken] = remainingCount;
+                } else if (db.bigram[firstInputToken]) {
+                    delete db.bigram[firstInputToken][firstReplyToken];
+                    if (Object.keys(db.bigram[firstInputToken]).length === 0) {
+                        delete db.bigram[firstInputToken];
+                    }
+                }
+            }
+        }
 
-        db.bigram[u0][b0] += 5; // 会話重み強め
+        db.pairs[userText] = [botText];
+        const firstReplyToken = b[0].base;
+        if (!db.bigram[firstInputToken]) db.bigram[firstInputToken] = {};
+        db.bigram[firstInputToken][firstReplyToken] =
+            (db.bigram[firstInputToken][firstReplyToken] || 0) + 5;
 
         saveDB(db);
+        return tokenLanguageModel.replaceConversationExample(
+            u.map(token => token.base),
+            b.map(token => token.base)
+        );
     }
 
     function extractKeywords(tokens) {
@@ -679,7 +772,8 @@
         generateSmart,
         cleanInput,
         isReady,
-        learnPair
+        learnPair,
+        analyzeText
     };
 
 }
