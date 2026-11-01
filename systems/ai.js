@@ -13,6 +13,7 @@
     let dbSaveInProgress = false;
     let dbDirty = false;
     let dbRevision = 0;
+    let ngramModel = null;
 
 
     // =========================
@@ -45,6 +46,74 @@
         if (!dbSaveTimer && !dbSaveInProgress) {
             dbSaveTimer = setTimeout(flushDB, 1000);
         }
+    }
+
+    function createNgramModel() {
+        return {
+            transitions: [null, new Map(), new Map(), new Map()],
+            frequencies: new Map()
+        };
+    }
+
+    function updateNgramSequence(model, tokens, change = 1) {
+        for (let index = 0; index < tokens.length; index++) {
+            const token = tokens[index];
+            if (!token) continue;
+
+            const frequency = (model.frequencies.get(token) || 0) + change;
+            if (frequency > 0) {
+                model.frequencies.set(token, frequency);
+            } else {
+                model.frequencies.delete(token);
+            }
+
+            for (let order = 1; order <= 3 && order <= index; order++) {
+                const context = JSON.stringify(tokens.slice(index - order, index));
+                let candidates = model.transitions[order].get(context);
+
+                if (!candidates && change > 0) {
+                    candidates = new Map();
+                    model.transitions[order].set(context, candidates);
+                }
+                if (!candidates) continue;
+
+                const count = (candidates.get(token) || 0) + change;
+                if (count > 0) {
+                    candidates.set(token, count);
+                } else {
+                    candidates.delete(token);
+                    if (candidates.size === 0) model.transitions[order].delete(context);
+                }
+            }
+        }
+    }
+
+    function getNgramModel(db) {
+        if (ngramModel) return ngramModel;
+
+        ngramModel = createNgramModel();
+        for (const sentence of db.sentences) {
+            if (!Array.isArray(sentence.tokens)) continue;
+            updateNgramSequence(
+                ngramModel,
+                sentence.tokens.map(token => token?.base).filter(Boolean)
+            );
+        }
+
+        for (const [input, replies] of Object.entries(db.pairs)) {
+            if (!Array.isArray(replies)) continue;
+            const inputTokens = parseText(input).map(token => token.base);
+            for (const reply of replies) {
+                const replyTokens = parseText(reply).map(token => token.base);
+                updateNgramSequence(ngramModel, [...inputTokens, ...replyTokens]);
+            }
+        }
+
+        return ngramModel;
+    }
+
+    function updateCachedNgramSequence(tokens, change = 1) {
+        if (ngramModel) updateNgramSequence(ngramModel, tokens, change);
     }
 
     async function flushDB() {
@@ -349,6 +418,7 @@
             tokens
         });
 
+        updateCachedNgramSequence(tokens.map(token => token.base));
         updateBigram(db, tokens);
         updatePosBigram(db, tokens);
 
@@ -429,56 +499,47 @@
     }
 
 
-    function buildWordPosMap(db) {
-
-        const map = {};
-
-        for (const s of db.sentences) {
-
-            for (const t of s.tokens) {
-
-                if (!map[t.pos]) {
-                    map[t.pos] = [];
-                }
-
-                map[t.pos].push(t.base);
-            }
-        }
-
-        return map;
-    }
-
-    function predictNextPos(db, currentPos) {
-
-        const nexts = db.posBigram[currentPos];
-        if (!nexts) return null;
-
-        let best = null;
-        let max = 0;
-
-        for (const pos of Object.keys(nexts)) {
-
-            if (nexts[pos] > max) {
-                max = nexts[pos];
-                best = pos;
-            }
-        }
-
-        return best;
-    }
     function getWordEmotion(db, word) {
         if (!db.emotion || !db.emotion[word]) return 0;
 
         const d = db.emotion[word];
         return d.score / d.count;
     }
+
+    function chooseWeighted(candidates, contextWords, targetEmotion, db) {
+        let total = 0;
+        const weighted = [];
+
+        for (const [word, count] of candidates) {
+            if (!isValidWord(word)) continue;
+
+            let score = count;
+            if (contextWords.has(word)) score *= 1.5;
+
+            const emotion = getWordEmotion(db, word);
+            score *= Math.max(0.1, 1 - Math.min(0.9, Math.abs(targetEmotion - emotion)));
+
+            total += score;
+            weighted.push([word, score]);
+        }
+
+        if (total === 0) return null;
+
+        let choice = Math.random() * total;
+        for (const [word, score] of weighted) {
+            choice -= score;
+            if (choice <= 0) return word;
+        }
+
+        return weighted[weighted.length - 1][0];
+    }
+
     // =========================
     // ランダム開始
     // =========================
     function randomWord(db) {
-        const keys = Object.keys(db.bigram);
-        if (keys.length === 0) return null;
-        return keys[Math.floor(Math.random() * keys.length)];
+        const model = getNgramModel(db);
+        return chooseWeighted(model.frequencies, new Set(), 0, db);
     }
 
 
@@ -496,95 +557,39 @@
         return false;
     }
 
-    function hasLearnedWordTransitions(text, db) {
-        const tokens = parseText(text);
-        if (tokens.length < 3) return true;
-
-        let learnedTransitions = 0;
-        for (let i = 0; i < tokens.length - 1; i++) {
-            if (db.bigram[tokens[i].base]?.[tokens[i + 1].base] > 0) {
-                learnedTransitions++;
-            }
-        }
-
-        return learnedTransitions / (tokens.length - 1) >= 0.25;
-    }
-
     // =========================
-    // 生成（重み付きマルコフ）
+    // 生成（最大3語のバックオフN-gram）
     // =========================
     function generate(startWord, contextWords = [], targetEmotion = 0) {
-
         const db = loadDB();
-        const wordPosMap = buildWordPosMap(db);
-
-        let current = startWord || randomWord(db);
+        const model = getNgramModel(db);
+        const current = startWord || randomWord(db);
         if (!current) return "";
 
-        let currentPos = "名詞";
-
+        const contextSet = new Set(contextWords);
         const result = [current];
-
         const maxLen = 10;
 
         for (let i = 0; i < maxLen; i++) {
-
-            const nextPos = predictNextPos(db, currentPos);
-
-            if (!nextPos) break;
-
-            const candidates = wordPosMap[nextPos];
-            if (!candidates || candidates.length === 0) break;
-
-            let weighted = [];
-
-            for (const word of candidates) {
-
-                if (!isValidWord(word)) continue;
-
-                let score = 1;
-
-                // 文脈ボーナス
-                if (contextWords.includes(word)) {
-                    score *= 2;
-                }
-
-                // 感情一致
-                const emo = getWordEmotion(db, word);
-                score *= (1 - Math.abs(targetEmotion - emo));
-
-                // 助詞強化
-                if (nextPos === "助詞") {
-                    score *= 2.5;
-                }
-
-                weighted.push([word, score]);
-            }
-
-            if (weighted.length === 0) break;
-
-            const total = weighted.reduce((a, b) => a + b[1], 0);
-
-            let r = Math.random() * total;
-
             let next = null;
+            const maxOrder = Math.min(3, result.length);
 
-            for (const [word, score] of weighted) {
+            for (let order = maxOrder; order >= 1; order--) {
+                const context = JSON.stringify(result.slice(-order));
+                const candidates = model.transitions[order].get(context);
+                if (!candidates) continue;
 
-                r -= score;
-
-                if (r <= 0) {
-                    next = word;
-                    break;
-                }
+                next = chooseWeighted(candidates, contextSet, targetEmotion, db);
+                if (next) break;
             }
 
+            if (!next && result.length === 1) {
+                next = chooseWeighted(model.frequencies, contextSet, targetEmotion, db);
+            }
             if (!next) break;
 
             result.push(next);
-
-            current = next;
-            currentPos = nextPos;
+            contextSet.add(next);
 
             // 文末
             if (
@@ -613,17 +618,6 @@
         const reply = findBestReply(tokens, db);
         if (reply && Math.random() < 0.3) return reply;
 
-        const tokenReply = tokenLanguageModel.generateReply(tokens.map(token => token.base));
-        if (tokenReply.length > 0) {
-            const neuralReply = fixSentence(tokenReply.join(""));
-            if (!isBad(neuralReply) && hasLearnedWordTransitions(neuralReply, db)) {
-                return neuralReply;
-            }
-        }
-
-        // =========================
-        // 🔥 ② 生成（最後）
-        // =========================
         let emotion = detectEmotionFromDB(db, tokens);
 
         if (Math.abs(emotion) < 0.05) {
@@ -635,12 +629,8 @@
         const context = buildContext(db, keywords);
 
         const start = keywords[0] || randomWord(db);
-
-        let gen = generate(start, [...context, ...userContext], emotion);
-
-        if (isBad(gen) || !hasLearnedWordTransitions(gen, db)) return "なるほどね";
-
-        return gen;
+        const generated = generate(start, [...context, ...userContext], emotion);
+        return isBad(generated) ? "なるほどね" : generated;
     }
     // =========================
     // クレンジング
@@ -668,6 +658,15 @@
         const previousReplies = Array.isArray(db.pairs[userText])
             ? db.pairs[userText]
             : [];
+        const inputWords = u.map(token => token.base);
+        for (const previousReply of previousReplies) {
+            const previousReplyWords = parseText(previousReply).map(token => token.base);
+            updateCachedNgramSequence([...inputWords, ...previousReplyWords], -1);
+        }
+
+        const replyWords = b.map(token => token.base);
+        updateCachedNgramSequence([...inputWords, ...replyWords]);
+
         const firstInputToken = u[0].base;
         for (const previousReply of previousReplies) {
             const previousReplyTokens = parseText(previousReply);
@@ -696,8 +695,8 @@
 
         saveDB(db);
         return tokenLanguageModel.replaceConversationExample(
-            u.map(token => token.base),
-            b.map(token => token.base)
+            inputWords,
+            replyWords
         );
     }
 

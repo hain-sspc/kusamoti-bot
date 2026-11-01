@@ -448,6 +448,69 @@ async function sendActiveEmbed({
     }
 }
 
+async function updateGuildRoles(client, guildId) {
+    const guildData = loadGuildData(guildId);
+    const ranking = Ranking(guildData.logs, Date.now(), 10);
+    const guild = await client.guilds.fetch(guildId);
+    const roles = guildData.roles || {};
+
+    const topRole = guild.roles.cache.get(roles.TOP_ROLE_ID);
+    const top3Role = guild.roles.cache.get(roles.TOP3_ROLE_ID);
+    const activeRole = guild.roles.cache.get(roles.ACTIVE_ROLE_ID);
+    const activeLongTop = guild.roles.cache.get(roles.ACTIVE_LONG_TOP_ID);
+    const activeShortTop = guild.roles.cache.get(roles.ACTIVE_SHORT_TOP_ID);
+    const newrole = guild.roles.cache.get(roles.NEWROLE_ID);
+
+    let roleChanged = false;
+    roleChanged = await updateSingleRole(guild, topRole, ranking.topUserId) || roleChanged;
+    roleChanged = await updateTop3Role(guild, top3Role, ranking.longTop3Ids) || roleChanged;
+    roleChanged = await updateActiveRole(guild, activeRole, ranking.activeRanking) || roleChanged;
+    roleChanged = await updateSingleRole(guild, activeLongTop, ranking.longTopUser) || roleChanged;
+    roleChanged = await updateSingleRole(guild, activeShortTop, ranking.shortTopUser) || roleChanged;
+    await updateNewRole(guild, newrole, ranking.longTotals);
+
+    logMessage("ロール更新完了:", guildId);
+    if (roleChanged) {
+        await sendActiveEmbed({
+            guild,
+            ranking: ranking.activeRanking,
+            shortTopUser: ranking.shortTopUser,
+            longTopUser: ranking.longTopUser,
+            topUserId: ranking.topUserId,
+            longTop3Ids: ranking.longTop3Ids
+        });
+    }
+}
+
+let hourlyRoleUpdateTimer = null;
+
+function startHourlyRoleUpdates(client) {
+    if (hourlyRoleUpdateTimer) return;
+
+    const scheduleNextUpdate = () => {
+        const now = new Date();
+        const nextHour = new Date(now);
+        nextHour.setHours(now.getHours() + 1, 0, 0, 0);
+
+        hourlyRoleUpdateTimer = setTimeout(async () => {
+            hourlyRoleUpdateTimer = null;
+            try {
+                for (const guildId of client.guilds.cache.keys()) {
+                    try {
+                        await updateGuildRoles(client, guildId);
+                    } catch (error) {
+                        logError("ロール更新失敗:", guildId, error);
+                    }
+                }
+            } finally {
+                scheduleNextUpdate();
+            }
+        }, nextHour.getTime() - now.getTime());
+    };
+
+    scheduleNextUpdate();
+}
+
 
 // ============================================================
 // flushMinuteData
@@ -462,8 +525,6 @@ async function flushMinuteData(client) {
     for (const [guildId] of pendingEntries) {
         delete minuteBuffer[guildId];
     }
-
-    const now = Date.now();
 
     const minuteKey =
         new Date()
@@ -504,144 +565,6 @@ async function flushMinuteData(client) {
             dataSaved = true;
 
 
-            // ------------------------------------------------
-            // ランキング計算
-            // ------------------------------------------------
-
-            const {
-                shortTotals,
-                longTotals,
-                shortRanking,
-                longRanking,
-                activeRanking,
-                shortTopUser,
-                longTopUser,
-                topUserId,
-                longTop3Ids
-            } = Ranking(
-                guildData.logs,
-                now,
-                10
-            );
-
-
-            logMessage(
-                "ランキング計算:",
-                guildId
-            );
-
-            logMessage(
-                "長期ユーザー数:",
-                Object.keys(longTotals).length
-            );
-
-
-            // ------------------------------------------------
-            // Guild取得
-            // ------------------------------------------------
-
-            const guild =
-                await client.guilds
-                    .fetch(guildId);
-
-            const roles =
-                guildData.roles || {};
-
-
-            const topRole =
-                guild.roles.cache.get(
-                    roles.TOP_ROLE_ID
-                );
-
-            const top3Role =
-                guild.roles.cache.get(
-                    roles.TOP3_ROLE_ID
-                );
-
-            const activeRole =
-                guild.roles.cache.get(
-                    roles.ACTIVE_ROLE_ID
-                );
-
-            const activeLongTop =
-                guild.roles.cache.get(
-                    roles.ACTIVE_LONG_TOP_ID
-                );
-
-            const activeShortTop =
-                guild.roles.cache.get(
-                    roles.ACTIVE_SHORT_TOP_ID
-                );
-
-            const newrole =
-                guild.roles.cache.get(
-                    roles.NEWROLE_ID
-                );
-
-
-            // ------------------------------------------------
-            // ロール更新
-            // ------------------------------------------------
-
-            let roleChanged = false;
-
-            roleChanged |=
-                await updateSingleRole(
-                    guild,
-                    topRole,
-                    topUserId
-                );
-
-            roleChanged |=
-                await updateTop3Role(
-                    guild,
-                    top3Role,
-                    longTop3Ids
-                );
-
-            roleChanged |=
-                await updateActiveRole(
-                    guild,
-                    activeRole,
-                    activeRanking
-                );
-
-            roleChanged |=
-                await updateSingleRole(
-                    guild,
-                    activeLongTop,
-                    longTopUser
-                );
-
-            roleChanged |=
-                await updateSingleRole(
-                    guild,
-                    activeShortTop,
-                    shortTopUser
-                );
-
-            await updateNewRole(
-                guild,
-                newrole,
-                longTotals
-            );
-
-
-            // ------------------------------------------------
-            // Embed
-            // ------------------------------------------------
-
-            if (roleChanged) {
-                await sendActiveEmbed({
-                    guild,
-                    ranking: activeRanking,
-                    shortTopUser,
-                    longTopUser,
-                    topUserId,
-                    longTop3Ids
-                });
-            }
-
         } catch (err) {
             if (!dataSaved) {
                 const retryData = minuteBuffer[guildId] ??= {
@@ -657,7 +580,7 @@ async function flushMinuteData(client) {
             }
 
             logError(
-                "ランキング処理失敗:",
+                "メッセージ集計処理失敗:",
                 guildId,
                 err
             );
@@ -677,6 +600,7 @@ async function flushMinuteData(client) {
 
 module.exports = {
     flushMinuteData,
+    startHourlyRoleUpdates,
     minuteBuffer,
     loadGuildData,
     saveGuildData

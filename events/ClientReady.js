@@ -1,6 +1,6 @@
 ﻿const { Events, ActivityType } = require('discord.js');
 const invitesCache = require("../data/invitesCache");
-const {flushMinuteData} = require("../messageLogger");
+const { flushMinuteData, startHourlyRoleUpdates } = require("../messageLogger");
 const ai = require('../systems/ai');
 
 module.exports = {
@@ -13,6 +13,7 @@ module.exports = {
             void flushMinuteData(client).catch(error => {
                 console.error("初回メッセージ集計の保存に失敗しました:", error);
             });
+            startHourlyRoleUpdates(client);
             setInterval(() => {
                 void flushMinuteData(client).catch(error => {
                     console.error("メッセージ集計の保存に失敗しました:", error);

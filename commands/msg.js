@@ -5,12 +5,11 @@ function addMessageCount(raw, guildId, userId, count) {
     const minuteKey = new Date().toISOString().slice(0, 16); // YYYY-MM-DDTHH:MM
 
     raw.logs ??= {};
-    raw.logs[guildId] ??= {};
-    raw.logs[guildId][minuteKey] ??= { total: 0, users: {} };
-    raw.logs[guildId][minuteKey].users[userId] ??= 0;
+    raw.logs[minuteKey] ??= { total: 0, users: {} };
+    raw.logs[minuteKey].users[userId] ??= 0;
 
-    raw.logs[guildId][minuteKey].users[userId] += count;
-    raw.logs[guildId][minuteKey].total += count;
+    raw.logs[minuteKey].users[userId] += count;
+    raw.logs[minuteKey].total += count;
 
     saveGuildData(guildId, raw); // messageLogger 側で用意した保存関数
 }
