@@ -20,6 +20,7 @@ module.exports = {
         .addIntegerOption(option =>
             option.setName('amount')
                 .setDescription('交換する金額')
+                .setMinValue(1)
                 .setRequired(true)
     ),
     async autocomplete(interaction) {
@@ -66,6 +67,10 @@ module.exports = {
             const fromGuildId = interaction.guild.id;
             const toGuildId = interaction.options.getString('target_guild');
             const amount = interaction.options.getInteger('amount');
+
+            if (!Number.isInteger(amount) || amount <= 0) {
+                return interaction.editReply('交換額は1以上で指定してください。');
+            }
        
  
             

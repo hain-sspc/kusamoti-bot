@@ -86,6 +86,7 @@ module.exports = {
 
         const ranking = [...userCounts.entries()]
             .sort((a, b) => b[1] - a[1]);
+        ranking.forEach(([userId, count]) => console.log(`${userId}:${count}`));
         const totalPages = Math.ceil(ranking.length / entriesPerPage);
 
         const generateEmbed = async page => {
