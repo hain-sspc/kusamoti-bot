@@ -1,30 +1,31 @@
 ﻿const { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 const fs = require('fs');
+const io = require('../systems/io');
 const SUB_PATH = './data/sub.json';
 
 function loadSubData() {
     if (!fs.existsSync(SUB_PATH)) {
-        fs.writeFileSync(SUB_PATH, JSON.stringify({ subAccounts: {}, pending: {} }, null, 2));
+        io.writeJsonSync(SUB_PATH, { subAccounts: {}, pending: {} });
     }
 
     try {
         const raw = fs.readFileSync(SUB_PATH, 'utf8').trim();
         if (!raw) {
             const initial = { subAccounts: {}, pending: {} };
-            fs.writeFileSync(SUB_PATH, JSON.stringify(initial, null, 2));
+            io.writeJsonSync(SUB_PATH, initial);
             return initial;
         }
         return JSON.parse(raw);
     } catch (err) {
         console.error('sub.json の読み込みに失敗しました。初期化します:', err);
         const initial = { subAccounts: {}, pending: {} };
-        fs.writeFileSync(SUB_PATH, JSON.stringify(initial, null, 2));
+        io.writeJsonSync(SUB_PATH, initial);
         return initial;
     }
 }
 
 function saveSubData(data) {
-    fs.writeFileSync(SUB_PATH, JSON.stringify(data, null, 2));
+    io.writeJsonSync(SUB_PATH, data);
 }
 
 module.exports = {

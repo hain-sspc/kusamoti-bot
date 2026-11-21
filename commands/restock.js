@@ -1,6 +1,7 @@
 ﻿const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, EmbedBuilder } = require("discord.js");
 const fs = require("fs");
 const path = require("path");
+const io = require("../systems/io");
 
 const SHOP_PATH = path.join(__dirname, "../data/shop.json");
 
@@ -12,7 +13,7 @@ function loadShop() {
 }
 
 function saveShop(shop) {
-    fs.writeFileSync(SHOP_PATH, JSON.stringify(shop, null, 2), "utf8");
+    io.writeJsonSync(SHOP_PATH, shop);
 }
 
 module.exports = {

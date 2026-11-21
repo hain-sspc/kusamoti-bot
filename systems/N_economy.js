@@ -1,6 +1,7 @@
 ﻿
 const fs = require('fs');
 const path = require('path');
+const io = require('./io');
 
 
 const DATA_DIR = path.join(__dirname, '../data');
@@ -26,14 +27,14 @@ function loadJson(filePath, defaultData) {
 
     try {
         if (!fs.existsSync(filePath)) {
-            fs.writeFileSync(filePath, JSON.stringify(defaultData, null, 2));
+            io.writeJsonSync(filePath, defaultData);
             return JSON.parse(JSON.stringify(defaultData));
         }
 
         const raw = fs.readFileSync(filePath, 'utf8');
 
         if (!raw.trim()) {
-            fs.writeFileSync(filePath, JSON.stringify(defaultData, null, 2));
+            io.writeJsonSync(filePath, defaultData);
             return JSON.parse(JSON.stringify(defaultData));
         }
 
@@ -44,10 +45,10 @@ function loadJson(filePath, defaultData) {
         console.error(err);
 
         try {
-            fs.renameSync(filePath, `${ filePath }.bak.${ Date.now() } `);
+            io.renameSync(filePath, `${ filePath }.bak.${ Date.now() } `);
         } catch {}
 
-        fs.writeFileSync(filePath, JSON.stringify(defaultData, null, 2));
+        io.writeJsonSync(filePath, defaultData);
 
         return JSON.parse(JSON.stringify(defaultData));
     }
@@ -55,7 +56,7 @@ function loadJson(filePath, defaultData) {
 
 function saveJson(filePath, data) {
     ensureDataFolder();
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    io.writeJsonSync(filePath, data);
 }
 
 

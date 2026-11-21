@@ -1,16 +1,17 @@
 ﻿const fs = require('fs');
 const path = require('path');
+const io = require('./io');
 const ECONOMY_PATH = path.join(__dirname, '../data/economy.json');
 const COIN_CONFIG_PATH = path.join(__dirname, '../data/coin_config.json');
 const DATA_PATH = path.join(__dirname, '../data/workrole.json');
 const DEFAULT_ECONOMY = { guilds: {} };
 const DEFAULT_COIN_CONFIG = {};
-const TAX_PATH = '../data/tax.json';
-const IO_PATH = '../data/io.json';
+const TAX_PATH = path.join(__dirname, '../data/tax.json');
+const IO_PATH = path.join(__dirname, '../data/io.json');
 function loadJson(filePath, defaultData) {
     try {
         if (!fs.existsSync(filePath)) {
-            fs.writeFileSync(filePath, JSON.stringify(defaultData, null, 2));
+            io.writeJsonSync(filePath, defaultData);
             return JSON.parse(JSON.stringify(defaultData));
         }
         const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -19,15 +20,15 @@ function loadJson(filePath, defaultData) {
         if (!data.guilds) data.guilds = {};
         return data;
     } catch {
-        fs.renameSync(filePath, filePath + `.bak.${Date.now()}`);
-        fs.writeFileSync(filePath, JSON.stringify(defaultData, null, 2));
+        io.renameSync(filePath, filePath + `.bak.${Date.now()}`);
+        io.writeJsonSync(filePath, defaultData);
         return JSON.parse(JSON.stringify(defaultData));
     }
 }
 
 
 function saveJson(filePath, data) {
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    io.writeJsonSync(filePath, data);
 }
 
 function loadEconomy() {
@@ -311,7 +312,7 @@ function loadTaxRate() {
     }
 }
 function saveTaxRate(data) {
-    fs.writeFileSync(TAX_PATH, JSON.stringify(data, null, 2));
+    io.writeJsonSync(TAX_PATH, data);
 }
 /**
  * サーバー間のコイン交換レートを計算
@@ -362,7 +363,7 @@ function steprole(guildId, roleId, amount) {
 
     // ファイルが無ければ作る
     if (!fs.existsSync(DATA_PATH)) {
-        fs.writeFileSync(DATA_PATH, JSON.stringify({}, null, 2));
+        io.writeJsonSync(DATA_PATH, {});
     }
 
     // 読み込み
@@ -383,7 +384,7 @@ function steprole(guildId, roleId, amount) {
     json[guildId].roles[roleId] = amount;
 
     // 保存
-    fs.writeFileSync(DATA_PATH, JSON.stringify(json, null, 2));
+    io.writeJsonSync(DATA_PATH, json);
 
     return true;
 }
@@ -407,7 +408,7 @@ function loadAllIO() {
     try {
         if (!fs.existsSync(IO_PATH)) {
             ensureDir(IO_PATH);
-            fs.writeFileSync(IO_PATH, '{}'); // 空ファイル作成
+            io.writeJsonSync(IO_PATH, {});
             console.log(`[IO] ファイル作成: ${IO_PATH}`);
         }
 
@@ -444,7 +445,7 @@ function saveio(guildId, inValue, outValue) {
 
     ensureDir(IO_PATH); // ディレクトリ作成
     try {
-        fs.writeFileSync(IO_PATH, JSON.stringify(iodata, null, 2));
+        io.writeJsonSync(IO_PATH, iodata);
         console.log(`[IO] ファイル保存成功: ${IO_PATH}`);
     } catch (err) {
         console.error(`[IO] ファイル保存失敗: ${err}`);

@@ -2,7 +2,7 @@
 const { } = require('../systems/economy');
 const fs = require('fs');
 const path = require('path');
-
+const serverLogs = require('../data/serverlog.json');
 
 
 
@@ -30,10 +30,13 @@ module.exports = {
 
         
             try {
-                const channel = await client.channels.fetch(logchannelid);
-                await channel.send(`${interaction.user.tag} が /${interaction.commandName} を実行しました`);
-                console.log(`[INTERACTION] ${interaction.commandName} 実行`);
-                console.log(`[USER] ${interaction.user.tag} (${interaction.user.id})`);
+                const logChannelId = serverLogs[interaction.guildId]?.serverlog;
+                if (logChannelId) {
+                    const channel = await client.channels.fetch(logChannelId);
+                    await channel.send(`${interaction.user.tag} が /${interaction.commandName} を実行しました`);
+                    console.log(`[INTERACTION] ${interaction.commandName} 実行`);
+                    console.log(`[USER] ${interaction.user.tag} (${interaction.user.id})`);
+                }
             } catch (e) {
                 console.error("ログ送信失敗:", e.message);
             }

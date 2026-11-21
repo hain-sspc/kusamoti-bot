@@ -1,4 +1,5 @@
 ﻿const fs = require('fs');
+const io = require('./systems/io');
 const path = require('path');
 const DEMAND_FILE = path.join(__dirname, './data/demand.json');
 
@@ -12,9 +13,7 @@ function loadDemand() {
 }
 
 function saveDemand(data) {
-    const dir = path.dirname(DEMAND_FILE);
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(DEMAND_FILE, JSON.stringify(data, null, 2));
+    io.writeJsonSync(DEMAND_FILE, data);
 }
 
 function addDemand(guildId, percentChange) {

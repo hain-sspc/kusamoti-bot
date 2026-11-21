@@ -2,6 +2,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const io = require("./systems/io");
 const { EmbedBuilder } = require("discord.js");
 
 const log = require("./data/serverlog.json");
@@ -45,10 +46,7 @@ function loadGuildData(guildId) {
             logs: {}
         };
 
-        fs.writeFileSync(
-            filePath,
-            JSON.stringify(initialData, null, 2)
-        );
+        io.writeJsonSync(filePath, initialData);
 
         return initialData;
     }
@@ -78,10 +76,7 @@ function loadGuildData(guildId) {
 function saveGuildData(guildId, data) {
     const filePath = getGuildPath(guildId);
 
-    fs.writeFileSync(
-        filePath,
-        JSON.stringify(data, null, 2)
-    );
+    io.writeJsonSync(filePath, data);
 }
 
 
@@ -112,7 +107,7 @@ function logMessage(...args) {
         "log.txt"
     );
 
-    fs.appendFileSync(
+    io.appendFileSync(
         logPath,
         `[${new Date().toISOString()}] ${text}\n`,
         "utf8"
@@ -136,7 +131,7 @@ function logError(...args) {
         "log.txt"
     );
 
-    fs.appendFileSync(
+    io.appendFileSync(
         logPath,
         `[${new Date().toISOString()}] ERROR: ${text}\n`,
         "utf8"

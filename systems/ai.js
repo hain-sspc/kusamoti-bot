@@ -2,6 +2,7 @@
     const fs = require("fs");
     const kuromoji = require("kuromoji");
     const path = require("path");
+    const io = require("./io");
     const tokenLanguageModel = require("./tokenLanguageModel");
 
     const FILE = path.join(__dirname, "..", "data", "txt.json");
@@ -122,21 +123,12 @@
 
         dbSaveInProgress = true;
         const revision = dbRevision;
-        const temporaryFile = `${FILE}.${process.pid}.tmp`;
 
         try {
-            await fs.promises.writeFile(temporaryFile, JSON.stringify(dbCache, null, 2));
-            await fs.promises.rename(temporaryFile, FILE);
+            await io.writeJson(FILE, dbCache);
             if (revision === dbRevision) dbDirty = false;
         } catch (error) {
             console.error("AIデータベースの保存に失敗しました:", error);
-            try {
-                await fs.promises.unlink(temporaryFile);
-            } catch (cleanupError) {
-                if (cleanupError.code !== "ENOENT") {
-                    console.error("AIデータベース一時ファイルの削除に失敗しました:", cleanupError);
-                }
-            }
         } finally {
             dbSaveInProgress = false;
             if (dbDirty && !dbSaveTimer) {
@@ -197,14 +189,20 @@
                         }
 
                         tokenLanguageModel.addTrainingExamples(examples);
-                        tokenLanguageModel.train().then(() => {
+                        tokenLanguageModel.train().then(trained => {
                             const status = tokenLanguageModel.getStatus();
-                            console.log(
-                                `AI token model ready: ${status.sequences} sequences, ` +
-                                `${status.vocabularySize} tokens`
-                            );
-                            resolve();
-                        }, reject);
+                            console.log("Token AI status:", {
+                                trained,
+                                modelReady: status.modelReady,
+                                sequences: status.sequences,
+                                conversations: status.conversations,
+                                vocabularySize: status.vocabularySize
+                            });
+
+                            if (!status.modelReady) {
+                                throw new Error("Token AI model is not ready");
+                            }
+                        }).then(resolve, reject);
                     } catch (error) {
                         reject(error);
                     }
@@ -557,6 +555,22 @@
         return false;
     }
 
+    function generateTokenReply(input) {
+        if (!isReady()) return "";
+
+        const clean = cleanInput(input);
+        const tokens = parseText(clean).map(token => token.base);
+        if (tokens.length === 0) return "";
+
+        const generatedTokens = tokenLanguageModel.generateReply(tokens, 24);
+        if (!Array.isArray(generatedTokens) || generatedTokens.length === 0) {
+            return "";
+        }
+
+        const reply = fixSentence(generatedTokens.join(""));
+        return isBad(reply) ? "" : reply;
+    }
+
     // =========================
     // 生成（最大3語のバックオフN-gram）
     // =========================
@@ -769,6 +783,7 @@
         learn,
         generate,
         generateSmart,
+        generateTokenReply,
         cleanInput,
         isReady,
         learnPair,

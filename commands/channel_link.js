@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
+const io = require('../systems/io');
 
 const channelLinksDirectory = path.join(__dirname, '..', 'data', 'channel_links');
 
@@ -20,8 +21,7 @@ function loadGuildData(guildId) {
 }
 
 function saveGuildData(guildId, data) {
-    fs.mkdirSync(channelLinksDirectory, { recursive: true });
-    fs.writeFileSync(getGuildFilePath(guildId), JSON.stringify(data, null, 2), 'utf8');
+    io.writeJsonSync(getGuildFilePath(guildId), data);
 }
 
 function getWebhookUrl(channelData) {

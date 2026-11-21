@@ -1,6 +1,7 @@
 ﻿const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
+const io = require('../systems/io');
 
 const globalPath = path.join(__dirname, '../data/globalchat.json');
 
@@ -40,7 +41,7 @@ module.exports = {
                 channel_id: channel.id
             };
 
-            fs.writeFileSync(globalPath, JSON.stringify(data, null, 2), 'utf-8');
+            io.writeJsonSync(globalPath, data);
 
             await interaction.editReply({ content: `このチャンネル (<#${channel.id}>) をグローバルチャットとして登録しました。` });
         } catch (err) {

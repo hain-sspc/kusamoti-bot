@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const io = require('./io');
 const tf = require('@tensorflow/tfjs-core');
 require('@tensorflow/tfjs-backend-cpu');
 const tfLayers = require('@tensorflow/tfjs-layers');
@@ -99,14 +100,9 @@ function readCorpus() {
 }
 
 function writeJson(file, value) {
-    fs.mkdirSync(path.dirname(file), { recursive: true });
-    const temporaryFile = `${file}.${process.pid}.tmp`;
-
     try {
-        fs.writeFileSync(temporaryFile, JSON.stringify(value));
-        fs.renameSync(temporaryFile, file);
+        io.writeJsonSync(file, value, 0);
     } catch (error) {
-        if (fs.existsSync(temporaryFile)) fs.unlinkSync(temporaryFile);
         if (file === CORPUS_FILE) {
             corpusCache = null;
             sequenceKeyCache = null;
